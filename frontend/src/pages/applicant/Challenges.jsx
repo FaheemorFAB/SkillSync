@@ -65,8 +65,8 @@ export default function ChallengesPage() {
   return (
     <div>
       <div className="page-header">
-        <h1 className="text-2xl font-bold text-white">Industry Challenges</h1>
-        <p className="text-gray-400 text-sm mt-1">
+        <h1 className="text-2xl font-bold text-slate-900">Industry Challenges</h1>
+        <p className="text-slate-500 text-sm mt-1">
           {challenges.length} open challenges across {SECTORS.length - 1} sectors
         </p>
       </div>
@@ -75,7 +75,7 @@ export default function ChallengesPage() {
         {/* Search + filters */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <input
               id="challenges-search"
               type="text"
@@ -107,9 +107,9 @@ export default function ChallengesPage() {
               onClick={() => setActiveSector(sector.id)}
               className="flex items-center gap-2 px-4 py-2 rounded-xl border whitespace-nowrap text-sm font-medium transition-all flex-shrink-0"
               style={{
-                borderColor: activeSector === sector.id ? sector.color : 'rgba(255,255,255,0.08)',
+                borderColor: activeSector === sector.id ? sector.color : '#E2E8F0',
                 background: activeSector === sector.id ? `${sector.color}15` : 'transparent',
-                color: activeSector === sector.id ? sector.color : '#9CA3AF',
+                color: activeSector === sector.id ? sector.color : '#64748B',
               }}
             >
               <sector.icon size={14} />
@@ -149,7 +149,7 @@ export default function ChallengesPage() {
                         <p className="text-xs font-medium" style={{ color: sectorColor }}>
                           {SectorObj?.label}
                         </p>
-                        <p className="text-xs text-gray-500 mt-0.5 flex items-center gap-1">
+                        <p className="text-xs text-slate-500 mt-0.5 flex items-center gap-1">
                           <Users size={10} />
                           {ch.applicant_count || 0} applicants
                         </p>
@@ -158,7 +158,7 @@ export default function ChallengesPage() {
                     <span className={`badge badge-${ch.difficulty?.toLowerCase()}`}>{ch.difficulty}</span>
                   </div>
 
-                  <h3 className="font-bold text-white text-base mb-3 leading-snug">{ch.title}</h3>
+                  <h3 className="font-bold text-slate-900 text-base mb-3 leading-snug">{ch.title}</h3>
 
                   {/* Skills */}
                   <div className="flex flex-wrap gap-1.5 mb-4">
@@ -169,21 +169,21 @@ export default function ChallengesPage() {
 
                   {/* Round info */}
                   <div className="flex items-center gap-3 mb-4 p-3 rounded-lg"
-                    style={{ background: 'rgba(255,255,255,0.03)' }}>
+                    style={{ background: '#F8FAFC' }}>
                     {['Aptitude', 'Technical', 'Industry'].map((r, i) => (
                       <React.Fragment key={r}>
                         <div className="text-center">
-                          <div className="text-xs text-gray-500">R{i+1}</div>
-                          <div className="text-xs font-medium text-gray-300">{r}</div>
+                          <div className="text-xs text-slate-500">R{i+1}</div>
+                          <div className="text-xs font-medium text-slate-700">{r}</div>
                         </div>
-                        {i < 2 && <ChevronRight size={12} className="text-gray-700" />}
+                        {i < 2 && <ChevronRight size={12} className="text-slate-400" />}
                       </React.Fragment>
                     ))}
                   </div>
 
                   {/* Footer */}
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                    <div className="flex items-center gap-1.5 text-xs text-slate-500">
                       <Clock size={12} />
                       {ch.time_limit_mins} min total
                     </div>
@@ -202,8 +202,8 @@ export default function ChallengesPage() {
 
             {filtered.length === 0 && !loading && (
               <div className="col-span-2 text-center py-16 card">
-                <Filter size={36} className="mx-auto mb-3 text-gray-700" />
-                <p className="text-gray-500">No challenges match your filters</p>
+                <Filter size={36} className="mx-auto mb-3 text-slate-400" />
+                <p className="text-slate-500">No challenges match your filters</p>
                 <button onClick={() => { setActiveSector('all'); setSearch(''); setDifficulty('all') }}
                   className="btn btn-secondary btn-sm mt-4">
                   Clear filters

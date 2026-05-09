@@ -27,35 +27,34 @@ const SECTOR_LABELS = {
 }
 
 const SECTOR_COLORS = {
-  web_dev: '#6366F1',
-  data_ai: '#8B5CF6',
-  cloud_devops: '#06B6D4',
-  cybersecurity: '#EF4444',
-  mobile_dev: '#10B981',
+  web_dev: '#2563EB',
+  data_ai: '#0891B2',
+  cloud_devops: '#059669',
+  cybersecurity: '#DC2626',
+  mobile_dev: '#D97706',
 }
 
 function RankBadge({ rank }) {
   if (rank === 1) return (
     <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-black text-sm"
-      style={{ background: 'linear-gradient(135deg, #F59E0B, #EF4444)' }}>
+      style={{ background: 'linear-gradient(135deg, #F59E0B, #DC2626)' }}>
       <Crown size={18} />
     </div>
   )
   if (rank === 2) return (
     <div className="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm"
-      style={{ background: 'linear-gradient(135deg, #9CA3AF, #6B7280)', color: 'white' }}>
+      style={{ background: 'linear-gradient(135deg, #94A3B8, #64748B)', color: 'white' }}>
       #{rank}
     </div>
   )
   if (rank === 3) return (
     <div className="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm"
-      style={{ background: 'linear-gradient(135deg, #CD7F32, #92400E)', color: 'white' }}>
+      style={{ background: 'linear-gradient(135deg, #D97706, #92400E)', color: 'white' }}>
       #{rank}
     </div>
   )
   return (
-    <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-gray-400"
-      style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
+    <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-slate-500 bg-slate-100 border border-slate-200">
       #{rank}
     </div>
   )
@@ -96,16 +95,16 @@ export default function LeaderboardPage() {
   })
 
   return (
-    <div style={{ background: '#0A0F1E', minHeight: '100vh' }}>
+    <div className="min-h-screen bg-slate-50 pb-16">
       {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50 glass border-b border-white/5">
+      <nav className="fixed top-0 w-full z-50 bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }}>
+              style={{ background: 'linear-gradient(135deg, #2563EB, #1D4ED8)' }}>
               <Rocket size={16} color="white" />
             </div>
-            <span className="font-bold text-lg text-white">SkillSync</span>
+            <span className="font-bold text-lg text-slate-900">SkillSync</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link to="/login" className="btn btn-secondary btn-sm">Sign In</Link>
@@ -117,22 +116,21 @@ export default function LeaderboardPage() {
       <div className="max-w-5xl mx-auto px-6 pt-28 pb-16">
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-4"
-            style={{ background: 'rgba(245,158,11,0.1)', color: '#F59E0B', border: '1px solid rgba(245,158,11,0.2)' }}>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-4 bg-amber-50 text-amber-600 border border-amber-200">
             <Trophy size={12} />
             Global Rankings
           </div>
-          <h1 className="text-4xl md:text-5xl font-black text-white mb-3">
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-3">
             Talent <span className="gradient-text-gold">Leaderboard</span>
           </h1>
-          <p className="text-gray-400">Real-time rankings of verified skill assessments</p>
+          <p className="text-slate-500">Real-time rankings of verified skill assessments</p>
         </div>
 
         {/* Live indicator */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <span className="live-dot" />
-            <span className="text-sm text-gray-400">
+            <span className="text-sm text-slate-500">
               Live · Updated {lastUpdate.toLocaleTimeString()}
             </span>
           </div>
@@ -148,7 +146,7 @@ export default function LeaderboardPage() {
         {/* Search + Filter */}
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <div className="relative flex-1">
-            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <input
               id="lb-search"
               type="text"
@@ -177,17 +175,17 @@ export default function LeaderboardPage() {
               const positions = [2, 1, 3]
               const heights = ['h-28', 'h-36', 'h-24']
               const colors = [
-                'linear-gradient(135deg, #9CA3AF, #6B7280)',
-                'linear-gradient(135deg, #F59E0B, #EF4444)',
-                'linear-gradient(135deg, #CD7F32, #92400E)',
+                'linear-gradient(135deg, #94A3B8, #64748B)',
+                'linear-gradient(135deg, #F59E0B, #DC2626)',
+                'linear-gradient(135deg, #D97706, #92400E)',
               ]
               return (
                 <div key={entry.id} className={`flex flex-col items-center ${i === 1 ? 'order-first md:order-none' : ''}`}>
                   <img src={entry.avatar} alt={entry.name}
-                    className="w-14 h-14 rounded-full mb-2 border-2"
-                    style={{ borderColor: SECTOR_COLORS[entry.sector] || '#6366F1' }} />
-                  <p className="text-xs font-semibold text-white text-center truncate max-w-full px-2">{entry.name}</p>
-                  <p className="text-xs text-gray-500 mb-2">{entry.score} pts</p>
+                    className="w-14 h-14 rounded-full mb-2 border-2 bg-white"
+                    style={{ borderColor: SECTOR_COLORS[entry.sector] || '#2563EB' }} />
+                  <p className="text-xs font-semibold text-slate-900 text-center truncate max-w-full px-2">{entry.name}</p>
+                  <p className="text-xs text-slate-500 mb-2">{entry.score} pts</p>
                   <div className={`w-full ${heights[i]} rounded-t-xl flex items-center justify-center text-white font-black text-xl`}
                     style={{ background: colors[i] }}>
                     #{positions[i]}
@@ -199,16 +197,16 @@ export default function LeaderboardPage() {
         )}
 
         {/* Leaderboard table */}
-        <div className="card-flat overflow-hidden">
-          <div className="border-b border-white/5 px-5 py-3 flex items-center justify-between">
-            <span className="text-sm font-semibold text-gray-300">{filtered.length} Participants</span>
-            <div className="flex items-center gap-1.5 text-xs text-gray-500">
+        <div className="card-flat overflow-hidden bg-white">
+          <div className="border-b border-slate-200 px-5 py-3 flex items-center justify-between">
+            <span className="text-sm font-semibold text-slate-600">{filtered.length} Participants</span>
+            <div className="flex items-center gap-1.5 text-xs text-slate-500">
               <Filter size={11} />
               {SECTOR_LABELS[filter]}
             </div>
           </div>
 
-          <div className="divide-y divide-white/5">
+          <div className="divide-y divide-slate-100">
             {filtered.map((entry) => (
               <div
                 key={entry.id}
@@ -217,11 +215,11 @@ export default function LeaderboardPage() {
                 <RankBadge rank={entry.global_rank} />
 
                 <img src={entry.avatar} alt={entry.name}
-                  className="w-11 h-11 rounded-full border border-white/10 bg-gray-900" />
+                  className="w-11 h-11 rounded-full border border-slate-200 bg-slate-50" />
 
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-white text-sm">{entry.name}</p>
-                  <p className="text-xs text-gray-500 truncate">{entry.challenge}</p>
+                  <p className="font-semibold text-slate-900 text-sm">{entry.name}</p>
+                  <p className="text-xs text-slate-500 truncate">{entry.challenge}</p>
                   <div className="flex flex-wrap gap-1 mt-1.5">
                     {entry.skills.slice(0, 3).map(skill => (
                       <span key={skill} className="skill-tag text-xs px-2 py-0">{skill}</span>
@@ -241,15 +239,15 @@ export default function LeaderboardPage() {
 
                 <div className="text-right flex-shrink-0">
                   <div className="text-2xl font-black" style={{
-                    background: entry.global_rank <= 3 ? 'linear-gradient(135deg, #F59E0B, #EF4444)' : 'linear-gradient(135deg, #6366F1, #8B5CF6)',
+                    background: entry.global_rank <= 3 ? 'linear-gradient(135deg, #F59E0B, #DC2626)' : 'linear-gradient(135deg, #2563EB, #1D4ED8)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
                   }}>
                     {entry.score}
                   </div>
-                  <div className="flex items-center justify-end gap-1 text-xs text-gray-500 mt-0.5">
-                    <Star size={10} className="text-yellow-500" />
+                  <div className="flex items-center justify-end gap-1 text-xs text-slate-500 mt-0.5">
+                    <Star size={10} className="text-amber-500" />
                     points
                   </div>
                 </div>
@@ -264,7 +262,7 @@ export default function LeaderboardPage() {
             ))}
 
             {filtered.length === 0 && (
-              <div className="text-center py-16 text-gray-500">
+              <div className="text-center py-16 text-slate-500">
                 <Trophy size={40} className="mx-auto mb-3 opacity-30" />
                 <p>No results found</p>
               </div>
@@ -273,7 +271,7 @@ export default function LeaderboardPage() {
         </div>
 
         <div className="text-center mt-8">
-          <Link to="/signup?role=applicant" className="btn btn-primary btn-lg">
+          <Link to="/signup?role=applicant" className="btn btn-primary btn-lg shadow-md">
             <Zap size={16} />
             Join the Leaderboard
           </Link>

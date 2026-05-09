@@ -56,6 +56,11 @@ class IntegrityReport(BaseModel):
     warnings: int
     events: list
 
+class FutureProofRequest(BaseModel):
+    sector: str
+    tech_stack: str
+    business_challenge: str
+
 # ── Fallback MCQ bank ─────────────────────────────────────────
 FALLBACK_QUESTIONS = {
     "web_dev": [
@@ -202,6 +207,33 @@ async def integrity_report(req: IntegrityReport):
 
     severity = "critical" if req.warnings >= 3 else "warning" if req.warnings > 0 else "clean"
     return {"status": severity, "warnings": req.warnings, "message": f"Integrity report processed. {req.warnings} violation(s) recorded."}
+
+
+@app.post("/api/future-proof-strategy")
+async def future_proof_strategy(req: FutureProofRequest):
+    """Generate a Future-Proof strategic blueprint using Gemini."""
+    if GEMINI_KEY:
+        try:
+            model = genai.GenerativeModel("gemini-2.5-flash")
+            prompt = f"""
+Act as a Principal Innovation Strategist.
+Company Sector: {req.sector}
+Current Stack: {req.tech_stack}
+Business Challenge: {req.business_challenge}
+
+Provide a concise, 3-point strategic blueprint for how this organization can future-proof itself and remain relevant.
+Keep it extremely brief to save tokens (under 100 words total). Focus on actionable innovation.
+Format as bullet points.
+"""
+            response = model.generate_content(prompt)
+            return {"strategy": response.text.strip()}
+        except Exception as e:
+            print(f"Gemini error: {e}")
+            
+    # Hardcoded fallback if API fails or exhausted
+    return {
+        "strategy": "• Modernize Legacy Architecture: Migrate core services to microservices to improve agility.\n• Upskill Workforce: Invest heavily in continuous AI-literacy training for your engineering teams.\n• Adopt Emerging Tech: Evaluate specialized open-source tools within your stack to reduce dependency lock-in."
+    }
 
 
 @app.get("/api/challenges")

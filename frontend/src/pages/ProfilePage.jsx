@@ -42,8 +42,8 @@ export default function ProfilePage() {
   return (
     <div>
       <div className="page-header">
-        <h1 className="text-2xl font-bold text-white">Your Profile</h1>
-        <p className="text-gray-400 text-sm mt-1">Manage your information and verified skills</p>
+        <h1 className="text-2xl font-bold text-slate-900">Your Profile</h1>
+        <p className="text-slate-500 text-sm mt-1">Manage your information and verified skills</p>
       </div>
 
       <form onSubmit={handleSave} className="page-body max-w-2xl space-y-8">
@@ -53,7 +53,7 @@ export default function ProfilePage() {
             <img
               src={profile?.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(form.full_name || 'User')}&backgroundColor=6366f1`}
               alt="avatar"
-              className="w-20 h-20 rounded-2xl border-2 border-white/10"
+              className="w-20 h-20 rounded-2xl border-2 border-slate-200"
             />
             <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-full flex items-center justify-center cursor-pointer"
               style={{ background: roleColor }}>
@@ -62,18 +62,18 @@ export default function ProfilePage() {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <h2 className="text-xl font-bold text-white">{form.full_name || 'Your Name'}</h2>
+              <h2 className="text-xl font-bold text-slate-900">{form.full_name || 'Your Name'}</h2>
               <span className="badge" style={{ background: `${roleColor}18`, color: roleColor, border: `1px solid ${roleColor}30` }}>
                 {profile?.role}
               </span>
             </div>
-            <p className="text-sm text-gray-400">{profile?.email}</p>
+            <p className="text-sm text-slate-500">{profile?.email}</p>
           </div>
         </div>
 
         {/* Personal info */}
         <section className="space-y-5">
-          <h2 className="font-bold text-white">Personal Information</h2>
+          <h2 className="font-bold text-slate-900">Personal Information</h2>
 
           <div className="form-row">
             <div className="form-group">
@@ -102,7 +102,7 @@ export default function ProfilePage() {
               <div key={field.key} className="form-group mb-0">
                 <label className="input-label">{field.label}</label>
                 <div className="relative">
-                  <field.icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                  <field.icon size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                   <input id={field.id} type="url" className="input pl-9" placeholder={field.placeholder} value={form[field.key]} onChange={e => setForm(f => ({ ...f, [field.key]: e.target.value }))} />
                 </div>
               </div>
@@ -113,7 +113,7 @@ export default function ProfilePage() {
         {/* Skills (applicant + employee) */}
         {(profile?.role === 'applicant' || profile?.role === 'employee') && (
           <section className="space-y-4">
-            <h2 className="font-bold text-white">Skills</h2>
+            <h2 className="font-bold text-slate-900">Skills</h2>
 
             <div className="flex gap-2">
               <input className="input flex-1" placeholder="Add custom skill..." value={skillInput} onChange={e => setSkillInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addCustomSkill())} />
@@ -123,7 +123,7 @@ export default function ProfilePage() {
             <div className="flex flex-wrap gap-2">
               {SKILLS_LIST.map(s => (
                 <button key={s} type="button" onClick={() => toggleSkill(s)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${form.skills.includes(s) ? 'border-indigo-500 bg-indigo-500/15 text-indigo-300' : 'border-white/10 text-gray-500 hover:border-indigo-500/40 hover:text-gray-300'}`}>
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${form.skills.includes(s) ? 'border-indigo-500 bg-indigo-50 text-indigo-700' : 'border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-slate-700'}`}>
                   {s}
                 </button>
               ))}
@@ -140,7 +140,7 @@ export default function ProfilePage() {
               </div>
             )}
 
-            <p className="text-xs text-gray-500">{form.skills.length} skill(s) selected</p>
+            <p className="text-xs text-slate-500">{form.skills.length} skill(s) selected</p>
           </section>
         )}
 

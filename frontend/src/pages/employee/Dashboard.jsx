@@ -16,10 +16,10 @@ export default function EmployeeDashboard() {
   return (
     <div>
       <div className="page-header">
-        <h1 className="text-2xl font-bold text-white">
+        <h1 className="text-2xl font-bold text-slate-900">
           Hello, {profile?.full_name?.split(' ')[0] || 'Employee'} 👋
         </h1>
-        <p className="text-gray-400 text-sm mt-1">Your internal opportunity matches</p>
+        <p className="text-slate-500 text-sm mt-1">Your internal opportunity matches</p>
       </div>
 
       <div className="page-body space-y-8">
@@ -45,7 +45,7 @@ export default function EmployeeDashboard() {
 
         {/* Internal matches */}
         <section>
-          <h2 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-slate-900 mb-5 flex items-center gap-2">
             <GitBranch size={18} style={{ color: '#8B5CF6' }} /> Internal Opportunity Matches
           </h2>
 
@@ -56,13 +56,13 @@ export default function EmployeeDashboard() {
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-bold text-white">{m.challenge}</h3>
+                        <h3 className="font-bold text-slate-900">{m.challenge}</h3>
                         <span className="badge" style={{
                           background: m.status === 'shortlisted' ? 'rgba(16,185,129,0.12)' : 'rgba(99,102,241,0.12)',
                           color: m.status === 'shortlisted' ? '#10B981' : '#818CF8'
                         }}>{m.status}</span>
                       </div>
-                      <p className="text-sm text-gray-400 mb-3">{m.company}</p>
+                      <p className="text-sm text-slate-500 mb-3">{m.company}</p>
                       <div className="flex flex-wrap gap-1.5 mb-3">
                         {m.matchedSkills.map(s => <span key={s} className="skill-tag" style={{ borderColor: '#10B981', color: '#6EE7B7', background: 'rgba(16,185,129,0.08)' }}>{s}</span>)}
                       </div>
@@ -71,15 +71,15 @@ export default function EmployeeDashboard() {
                       </div>
                     </div>
                     <div className="text-right flex-shrink-0">
-                      <div className="text-3xl font-black text-green-400">{m.matchScore}%</div>
-                      <p className="text-xs text-gray-500">Match Score</p>
+                      <div className="text-3xl font-black text-green-500">{m.matchScore}%</div>
+                      <p className="text-xs text-slate-500">Match Score</p>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="card text-center py-12 text-gray-500">
+            <div className="card text-center py-12 text-slate-500">
               <Target size={36} className="mx-auto mb-3 opacity-30" />
               <p className="text-sm">No matches yet. Update your skills profile to get matched.</p>
               <Link to="/employee/profile" className="btn btn-primary btn-sm mt-4">Update Skills</Link>
@@ -90,7 +90,7 @@ export default function EmployeeDashboard() {
         {/* Skills */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold text-white">Your Verified Skills</h2>
+            <h2 className="text-lg font-bold text-slate-900">Your Verified Skills</h2>
             <Link to="/employee/profile" className="btn btn-secondary btn-sm">Edit <ArrowRight size={13} /></Link>
           </div>
           {profile?.skills?.length > 0 ? (
@@ -98,7 +98,7 @@ export default function EmployeeDashboard() {
               {profile.skills.map(s => <span key={s} className="skill-tag">{s}</span>)}
             </div>
           ) : (
-            <div className="card p-6 text-center text-gray-500">
+            <div className="card p-6 text-center text-slate-500">
               <p className="text-sm">No skills listed yet.</p>
               <Link to="/employee/profile" className="btn btn-primary btn-sm mt-3">Add Skills</Link>
             </div>

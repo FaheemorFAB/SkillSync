@@ -38,10 +38,10 @@ export default function InternalMatchPage() {
   return (
     <div>
       <div className="page-header">
-        <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
           <GitBranch size={22} style={{ color: '#8B5CF6' }} /> Internal Match Engine
         </h1>
-        <p className="text-gray-400 text-sm mt-1">Compare job requirements against your team's verified skill profiles</p>
+        <p className="text-slate-500 text-sm mt-1">Compare job requirements against your team's verified skill profiles</p>
       </div>
 
       <div className="page-body space-y-6">
@@ -53,7 +53,7 @@ export default function InternalMatchPage() {
           </select>
           {challenge && (
             <div className="flex flex-wrap gap-1.5 mt-3">
-              <span className="text-xs text-gray-500">Required skills:</span>
+              <span className="text-xs text-slate-500">Required skills:</span>
               {challenge.skills_required.map(s => <span key={s} className="skill-tag">{s}</span>)}
             </div>
           )}
@@ -65,21 +65,21 @@ export default function InternalMatchPage() {
             <div key={emp.id} className={`card p-5 flex items-center gap-4 ${emp.matchScore >= 80 ? 'border-green-500/30' : emp.matchScore >= 50 ? 'border-yellow-500/20' : ''}`}>
               {/* Rank */}
               <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-                style={{ background: i === 0 ? 'linear-gradient(135deg,#F59E0B,#EF4444)' : 'rgba(255,255,255,0.05)', color: i === 0 ? 'white' : '#6B7280' }}>
+                style={{ background: i === 0 ? 'linear-gradient(135deg,#F59E0B,#EF4444)' : '#E2E8F0', color: i === 0 ? 'white' : '#64748B' }}>
                 #{i + 1}
               </div>
 
-              <img src={emp.avatar} alt={emp.name} className="w-12 h-12 rounded-full border border-white/10 flex-shrink-0" />
+              <img src={emp.avatar} alt={emp.name} className="w-12 h-12 rounded-full border border-slate-200 flex-shrink-0" />
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <h3 className="font-bold text-white">{emp.name}</h3>
-                  <span className="text-xs text-gray-500">{emp.bio}</span>
+                  <h3 className="font-bold text-slate-900">{emp.name}</h3>
+                  <span className="text-xs text-slate-500">{emp.bio}</span>
                 </div>
                 <div className="flex flex-wrap gap-1.5 mb-2">
                   {emp.skills.map(s => (
                     <span key={s} className={`skill-tag ${emp.matchedSkills.includes(s) ? '' : 'opacity-40'}`}
-                      style={emp.matchedSkills.includes(s) ? { borderColor: '#10B981', color: '#6EE7B7', background: 'rgba(16,185,129,0.08)' } : {}}>
+                      style={emp.matchedSkills.includes(s) ? { borderColor: '#10B981', color: '#059669', background: '#ECFDF5' } : {}}>
                       {emp.matchedSkills.includes(s) && <CheckCircle size={10} />} {s}
                     </span>
                   ))}
@@ -98,7 +98,7 @@ export default function InternalMatchPage() {
                 }}>
                   {emp.matchScore}%
                 </div>
-                <p className="text-xs text-gray-500">{emp.matchedSkills.length}/{challenge?.skills_required?.length || 0} skills</p>
+                <p className="text-xs text-slate-500">{emp.matchedSkills.length}/{challenge?.skills_required?.length || 0} skills</p>
               </div>
 
               {emp.matchScore >= 60 && (

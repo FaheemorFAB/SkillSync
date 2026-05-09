@@ -99,14 +99,14 @@ export default function ApplicantDashboard() {
       <div className="page-header">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-white">
+            <h1 className="text-2xl font-bold text-slate-900">
               Welcome back, {profile?.full_name?.split(' ')[0] || 'Challenger'} 👋
             </h1>
-            <p className="text-gray-400 text-sm mt-1">Ready to prove your skills today?</p>
+            <p className="text-slate-500 text-sm mt-1">Ready to prove your skills today?</p>
           </div>
           <div className="flex items-center gap-2">
             <span className="live-dot" />
-            <span className="text-xs text-gray-500">Live Rankings Active</span>
+            <span className="text-xs text-slate-500">Live Rankings Active</span>
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@ export default function ApplicantDashboard() {
         {/* Available Challenges */}
         <section>
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <Flame size={18} style={{ color: '#EF4444' }} />
               Open Challenges
             </h2>
@@ -153,7 +153,7 @@ export default function ApplicantDashboard() {
                     <span className={`badge badge-${ch.difficulty?.toLowerCase()}`}>{ch.difficulty}</span>
                   </div>
 
-                  <h3 className="font-bold text-white mb-2">{ch.title}</h3>
+                  <h3 className="font-bold text-slate-900 mb-2">{ch.title}</h3>
 
                   <div className="flex flex-wrap gap-1.5 mb-4">
                     {(ch.skills_required || []).slice(0, 3).map(skill => (
@@ -162,7 +162,7 @@ export default function ApplicantDashboard() {
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                    <div className="flex items-center gap-1.5 text-xs text-slate-500">
                       <Clock size={12} />
                       {ch.time_limit_mins} min
                     </div>
@@ -182,26 +182,26 @@ export default function ApplicantDashboard() {
 
         {/* My Submissions */}
         <section>
-          <h2 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-slate-900 mb-5 flex items-center gap-2">
             <TrendingUp size={18} style={{ color: '#6366F1' }} />
             My Attempts
           </h2>
 
           <div className="card-flat overflow-hidden">
             {displaySubmissions.length > 0 ? (
-              <div className="divide-y divide-white/5">
+              <div className="divide-y divide-slate-200">
                 {displaySubmissions.map((sub) => (
-                  <div key={sub.id} className="flex items-center gap-4 p-4 hover:bg-white/2 transition-colors">
+                  <div key={sub.id} className="flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors">
                     <div className="w-2 h-2 rounded-full flex-shrink-0"
                       style={{ background: sub.status === 'completed' ? '#10B981' : sub.status === 'in_progress' ? '#F59E0B' : '#EF4444' }} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{sub.challenges?.title}</p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-sm font-medium text-slate-900 truncate">{sub.challenges?.title}</p>
+                      <p className="text-xs text-slate-500">
                         Round {sub.current_round}/3 · {sub.challenges?.difficulty}
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-white">{sub.total_score || 0} <span className="text-xs text-gray-500 font-normal">pts</span></p>
+                      <p className="font-bold text-slate-900">{sub.total_score || 0} <span className="text-xs text-slate-500 font-normal">pts</span></p>
                       <span className={`text-xs ${sub.status === 'completed' ? 'text-green-400' : sub.status === 'in_progress' ? 'text-yellow-400' : 'text-red-400'}`}>
                         {sub.status === 'completed' ? '✓ Completed' : sub.status === 'in_progress' ? '⟳ In Progress' : '✗ Disqualified'}
                       </span>
@@ -224,7 +224,7 @@ export default function ApplicantDashboard() {
         {/* Skills summary */}
         {profile?.skills?.length > 0 && (
           <section>
-            <h2 className="text-lg font-bold text-white mb-4">Your Skills</h2>
+            <h2 className="text-lg font-bold text-slate-900 mb-4">Your Skills</h2>
             <div className="flex flex-wrap gap-2">
               {profile.skills.map(skill => (
                 <span key={skill} className="skill-tag">{skill}</span>

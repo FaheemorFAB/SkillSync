@@ -13,21 +13,21 @@ const ROLES = [
     label: 'Applicant',
     desc: 'Take challenges, prove your skills, get hired',
     icon: User,
-    color: '#6366F1',
+    color: '#2563EB',
   },
   {
     id: 'company',
     label: 'Company',
     desc: 'Post challenges, hire verified talent',
     icon: Building2,
-    color: '#06B6D4',
+    color: '#0891B2',
   },
   {
     id: 'employee',
     label: 'Employee',
     desc: 'Showcase skills for internal advancement',
     icon: Users,
-    color: '#10B981',
+    color: '#059669',
   },
 ]
 
@@ -101,38 +101,35 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12" style={{ background: '#0A0F1E' }}>
-      <div className="orb orb-purple fixed" style={{ top: '-100px', right: '-100px', opacity: 0.35 }} />
-      <div className="orb orb-violet fixed" style={{ bottom: '-100px', left: '-100px', opacity: 0.3 }} />
-
+    <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-slate-50">
       <div className="w-full max-w-lg relative z-10">
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5 mb-4">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }}>
+              style={{ background: 'linear-gradient(135deg, #2563EB, #1D4ED8)' }}>
               <Rocket size={20} color="white" />
             </div>
-            <span className="font-bold text-xl text-white">SkillSync</span>
+            <span className="font-bold text-xl text-slate-900">SkillSync</span>
           </Link>
-          <h1 className="text-3xl font-bold text-white mb-2">Create your account</h1>
-          <p className="text-gray-400 text-sm">Join the skills-based hiring revolution</p>
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">Create your account</h1>
+          <p className="text-slate-500 text-sm">Join the skills-based hiring revolution</p>
         </div>
 
         {/* Step progress */}
         <div className="flex items-center gap-2 mb-8">
           {[1, 2].map((s) => (
             <React.Fragment key={s}>
-              <div className={`flex items-center gap-2 ${s <= step ? 'text-indigo-400' : 'text-gray-600'}`}>
+              <div className={`flex items-center gap-2 ${s <= step ? 'text-blue-600' : 'text-slate-500'}`}>
                 <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold
-                  ${s < step ? 'bg-indigo-500 text-white' : s === step ? 'border-2 border-indigo-500 text-indigo-400' : 'border-2 border-gray-700 text-gray-600'}`}>
+                  ${s < step ? 'bg-blue-600 text-white' : s === step ? 'border-2 border-blue-600 text-blue-600' : 'border-2 border-slate-300 text-slate-500'}`}>
                   {s < step ? <CheckCircle size={14} /> : s}
                 </div>
                 <span className="text-xs font-medium hidden sm:block">
                   {s === 1 ? 'Account Details' : 'Your Profile'}
                 </span>
               </div>
-              {s < 2 && <div className={`flex-1 h-px ${step > 1 ? 'bg-indigo-500' : 'bg-gray-800'}`} />}
+              {s < 2 && <div className={`flex-1 h-px ${step > 1 ? 'bg-blue-600' : 'bg-slate-200'}`} />}
             </React.Fragment>
           ))}
         </div>
@@ -140,7 +137,7 @@ export default function SignupPage() {
         <div className="card p-8">
           {error && (
             <div className="flex items-center gap-2 p-3 rounded-lg mb-5 text-sm"
-              style={{ background: 'rgba(239,68,68,0.1)', color: '#FCA5A5', border: '1px solid rgba(239,68,68,0.2)' }}>
+              style={{ background: '#FEF2F2', color: '#DC2626', border: '1px solid #FECACA' }}>
               <AlertCircle size={15} />
               {error}
             </div>
@@ -159,10 +156,10 @@ export default function SignupPage() {
                       type="button"
                       id={`role-${r.id}`}
                       onClick={() => setRole(r.id)}
-                      className="w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left"
+                      className="w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all text-left bg-white"
                       style={{
-                        borderColor: role === r.id ? r.color : 'rgba(255,255,255,0.08)',
-                        background: role === r.id ? `${r.color}10` : 'transparent',
+                        borderColor: role === r.id ? r.color : '#E2E8F0',
+                        background: role === r.id ? `${r.color}10` : 'white',
                       }}
                     >
                       <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -170,8 +167,8 @@ export default function SignupPage() {
                         <r.icon size={18} style={{ color: r.color }} />
                       </div>
                       <div>
-                        <div className="font-semibold text-white text-sm">{r.label}</div>
-                        <div className="text-xs text-gray-500 mt-0.5">{r.desc}</div>
+                        <div className="font-semibold text-slate-900 text-sm">{r.label}</div>
+                        <div className="text-xs text-slate-500 mt-0.5">{r.desc}</div>
                       </div>
                       {role === r.id && (
                         <CheckCircle size={18} className="ml-auto flex-shrink-0" style={{ color: r.color }} />
@@ -235,7 +232,7 @@ export default function SignupPage() {
                       required
                     />
                     <button type="button" onClick={() => setShowPass(!showPass)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
                       {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>
                   </div>
@@ -298,8 +295,8 @@ export default function SignupPage() {
                         onClick={() => toggleSkill(skill)}
                         className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${
                           form.skills.includes(skill)
-                            ? 'border-indigo-500 bg-indigo-500/15 text-indigo-300'
-                            : 'border-white/10 text-gray-500 hover:border-indigo-500/40 hover:text-gray-300'
+                            ? 'border-blue-600 bg-blue-50 text-blue-700'
+                            : 'border-slate-200 text-slate-600 hover:border-blue-300 hover:text-slate-900'
                         }`}
                       >
                         {skill}
@@ -307,7 +304,7 @@ export default function SignupPage() {
                     ))}
                   </div>
                   {form.skills.length > 0 && (
-                    <p className="text-xs text-indigo-400 mt-2">{form.skills.length} skill(s) selected</p>
+                    <p className="text-xs text-blue-600 mt-2">{form.skills.length} skill(s) selected</p>
                   )}
                 </div>
               )}
@@ -340,9 +337,9 @@ export default function SignupPage() {
           )}
         </div>
 
-        <p className="text-center text-sm text-gray-500 mt-6">
+        <p className="text-center text-sm text-slate-500 mt-6">
           Already have an account?{' '}
-          <Link to="/login" className="text-indigo-400 font-medium hover:text-indigo-300 transition-colors">
+          <Link to="/login" className="text-blue-600 font-medium hover:text-blue-700 transition-colors">
             Sign in
           </Link>
         </p>

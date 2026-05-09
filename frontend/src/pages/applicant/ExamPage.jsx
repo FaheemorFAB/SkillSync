@@ -88,8 +88,8 @@ function Round1({ questions, onComplete }) {
   if (submitted) return (
     <div className="flex flex-col items-center justify-center h-full text-center py-16">
       <CheckCircle size={56} className="mb-4" style={{ color: '#10B981' }} />
-      <h3 className="text-2xl font-bold text-white mb-2">Round 1 Complete!</h3>
-      <p className="text-gray-400">Calculating your aptitude score...</p>
+      <h3 className="text-2xl font-bold text-slate-900 mb-2">Round 1 Complete!</h3>
+      <p className="text-slate-500">Calculating your aptitude score...</p>
     </div>
   )
 
@@ -97,11 +97,11 @@ function Round1({ questions, onComplete }) {
     <div className="max-w-2xl mx-auto py-8 px-4">
       {/* Progress */}
       <div className="flex items-center justify-between mb-6">
-        <span className="text-sm text-gray-400">Question {current + 1} of {questions.length}</span>
+        <span className="text-sm text-slate-500">Question {current + 1} of {questions.length}</span>
         <div className="flex gap-1.5">
           {questions.map((_, i) => (
             <div key={i} className="w-2 h-2 rounded-full transition-all"
-              style={{ background: i < current ? '#10B981' : i === current ? '#6366F1' : 'rgba(255,255,255,0.1)' }} />
+              style={{ background: i < current ? '#10B981' : i === current ? '#6366F1' : '#E2E8F0' }} />
           ))}
         </div>
       </div>
@@ -110,7 +110,7 @@ function Round1({ questions, onComplete }) {
         <div className="progress-fill" style={{ width: `${((current + 1) / questions.length) * 100}%` }} />
       </div>
 
-      <h2 className="text-xl font-bold text-white mb-6">{q.question}</h2>
+      <h2 className="text-xl font-bold text-slate-900 mb-6">{q.question}</h2>
 
       <div className="space-y-3 mb-8">
         {q.options.map((opt, i) => (
@@ -179,11 +179,11 @@ function Round2({ problem, starterCode, onComplete }) {
       {/* Problem pane */}
       <div className="flex flex-col md:flex-row flex-1 gap-4 p-4 overflow-hidden">
         <div className="md:w-2/5 overflow-y-auto p-4 card-flat rounded-xl">
-          <h3 className="text-lg font-bold text-white mb-3">Problem</h3>
-          <p className="text-gray-300 text-sm leading-relaxed mb-4">{problem}</p>
-          <div className="text-xs text-gray-500 p-3 rounded-lg font-mono"
-            style={{ background: 'rgba(255,255,255,0.03)' }}>
-            <p className="text-green-400 mb-1">// Example</p>
+          <h3 className="text-lg font-bold text-slate-900 mb-3">Problem</h3>
+          <p className="text-slate-700 text-sm leading-relaxed mb-4">{problem}</p>
+          <div className="text-xs text-slate-500 p-3 rounded-lg font-mono"
+            style={{ background: '#F8FAFC' }}>
+            <p className="text-emerald-600 mb-1">// Example</p>
             <p>Input: nums = [2,7,11,15], target = 9</p>
             <p>Output: [0, 1]</p>
           </div>
@@ -191,12 +191,12 @@ function Round2({ problem, starterCode, onComplete }) {
 
         <div className="md:w-3/5 flex flex-col gap-3">
           {/* Mac-style chrome */}
-          <div className="flex-1 flex flex-col rounded-xl overflow-hidden border border-white/10">
-            <div className="px-4 py-2 flex gap-2 items-center" style={{ background: '#1a1a2e' }}>
+          <div className="flex-1 flex flex-col rounded-xl overflow-hidden border border-slate-200">
+            <div className="px-4 py-2 flex gap-2 items-center" style={{ background: '#1e293b' }}>
               <div className="w-3 h-3 rounded-full bg-red-500" />
               <div className="w-3 h-3 rounded-full bg-yellow-500" />
               <div className="w-3 h-3 rounded-full bg-green-500" />
-              <span className="text-xs text-gray-500 ml-2">solution.js</span>
+              <span className="text-xs text-slate-400 ml-2">solution.js</span>
             </div>
             <textarea
               id="code-editor"
@@ -210,7 +210,7 @@ function Round2({ problem, starterCode, onComplete }) {
 
           {output && (
             <div className="p-3 rounded-xl text-xs font-mono"
-              style={{ background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)', color: '#6EE7B7' }}>
+              style={{ background: '#ECFDF5', border: '1px solid #A7F3D0', color: '#059669' }}>
               Output: {output}
             </div>
           )}
@@ -256,9 +256,9 @@ function Round3({ scenario, onComplete }) {
       <div className="card p-6 mb-6">
         <div className="flex items-center gap-2 mb-3">
           <Rocket size={18} style={{ color: '#06B6D4' }} />
-          <h3 className="font-bold text-white">Industry Problem</h3>
+          <h3 className="font-bold text-slate-900">Industry Problem</h3>
         </div>
-        <p className="text-gray-300 text-sm leading-relaxed">{scenario}</p>
+        <p className="text-slate-700 text-sm leading-relaxed">{scenario}</p>
       </div>
 
       <div className="form-group">
@@ -271,7 +271,7 @@ function Round3({ scenario, onComplete }) {
           rows={14}
           placeholder="Describe your approach, include code snippets, explain your reasoning..."
         />
-        <p className="text-xs text-gray-600 mt-1">{response.length} characters · Min 50 required</p>
+        <p className="text-xs text-slate-500 mt-1">{response.length} characters · Min 50 required</p>
       </div>
 
       <button
@@ -401,20 +401,20 @@ export default function ExamPage() {
 
   // ── Briefing screen ──
   if (!challenge) return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: '#0A0F1E' }}>
+    <div className="min-h-screen flex items-center justify-center bg-slate-50">
       <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
     </div>
   )
 
   if (phase === 'briefing') return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#0A0F1E' }}>
+    <div className="min-h-screen flex items-center justify-center px-4 bg-slate-50">
       <div className="max-w-lg w-full">
         <div className="card p-8 text-center">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6"
             style={{ background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }}>
             <ShieldAlert size={30} color="white" />
           </div>
-          <h1 className="text-2xl font-bold text-white mb-2">{challenge.title}</h1>
+          <h1 className="text-2xl font-bold text-slate-900 mb-2">{challenge.title}</h1>
           <span className={`badge badge-${challenge.difficulty?.toLowerCase()} mb-6 inline-flex`}>
             {challenge.difficulty}
           </span>
@@ -427,7 +427,7 @@ export default function ExamPage() {
                   <div className="round-dot active w-9 h-9">
                     <r.icon size={14} />
                   </div>
-                  <span className="text-xs text-gray-500">{r.label}</span>
+                  <span className="text-xs text-slate-500">{r.label}</span>
                 </div>
                 {i < 2 && <div className="round-connector w-8" />}
               </React.Fragment>
@@ -435,12 +435,12 @@ export default function ExamPage() {
           </div>
 
           <div className="text-left space-y-3 mb-8 p-4 rounded-xl"
-            style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.15)' }}>
-            <p className="text-sm font-semibold text-red-400 flex items-center gap-2">
+            style={{ background: '#FEF2F2', border: '1px solid #FECACA' }}>
+            <p className="text-sm font-semibold text-red-600 flex items-center gap-2">
               <Eye size={14} /> SkillSync Anti-Cheat Active
             </p>
             {['Fullscreen required during exam', 'Tab switching is recorded', 'Copy/paste is disabled', '3+ violations = auto-disqualification'].map(r => (
-              <p key={r} className="text-xs text-gray-400 flex items-center gap-2">
+              <p key={r} className="text-xs text-slate-700 flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" /> {r}
               </p>
             ))}
@@ -463,24 +463,24 @@ export default function ExamPage() {
   if (phase === 'done') {
     const total = scores.r1 + scores.r2 + scores.r3
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0A0F1E' }}>
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
         <div className="max-w-md w-full card p-8 text-center mx-4">
           <CheckCircle size={56} className="mx-auto mb-4" style={{ color: '#10B981' }} />
-          <h2 className="text-3xl font-black text-white mb-2">Challenge Complete!</h2>
-          <p className="text-gray-400 mb-6">Your results are being verified</p>
+          <h2 className="text-3xl font-black text-slate-900 mb-2">Challenge Complete!</h2>
+          <p className="text-slate-500 mb-6">Your results are being verified</p>
           <div className="grid grid-cols-3 gap-3 mb-6">
             {[['Round 1', scores.r1], ['Round 2', scores.r2], ['Round 3', scores.r3]].map(([label, score]) => (
-              <div key={label} className="p-3 rounded-xl" style={{ background: 'rgba(99,102,241,0.08)' }}>
-                <div className="text-2xl font-black text-white">{score}</div>
-                <div className="text-xs text-gray-500 mt-1">{label}</div>
+              <div key={label} className="p-3 rounded-xl bg-indigo-50">
+                <div className="text-2xl font-black text-slate-900">{score}</div>
+                <div className="text-xs text-slate-500 mt-1">{label}</div>
               </div>
             ))}
           </div>
           <div className="text-5xl font-black gradient-text mb-2">{total}</div>
-          <p className="text-gray-500 text-sm mb-6">Total Score / 300</p>
+          <p className="text-slate-500 text-sm mb-6">Total Score / 300</p>
           {warnings > 0 && (
-            <div className="p-3 rounded-lg mb-4 text-xs text-yellow-400"
-              style={{ background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)' }}>
+            <div className="p-3 rounded-lg mb-4 text-xs text-amber-700"
+              style={{ background: '#FFFBEB', border: '1px solid #FDE68A' }}>
               ⚠️ {warnings} integrity violation(s) recorded
             </div>
           )}
@@ -494,16 +494,15 @@ export default function ExamPage() {
 
   // ── Exam screen ──
   return (
-    <div ref={containerRef} className="fixed inset-0 flex flex-col" style={{ background: '#0A0F1E', zIndex: 9999 }}>
+    <div ref={containerRef} className="fixed inset-0 flex flex-col bg-slate-50" style={{ zIndex: 9999 }}>
       {/* Exam header */}
-      <header className="flex items-center justify-between px-6 py-3 border-b border-white/5"
-        style={{ background: '#0D1117' }}>
+      <header className="flex items-center justify-between px-6 py-3 border-b border-slate-200 bg-white">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 text-xs text-red-400 font-medium">
+          <div className="flex items-center gap-1.5 text-xs text-red-600 font-medium">
             <span className="live-dot" style={{ background: '#EF4444' }} />
             PROCTORED
           </div>
-          <span className="text-sm font-semibold text-white hidden md:block">{challenge.title}</span>
+          <span className="text-sm font-semibold text-slate-900 hidden md:block">{challenge.title}</span>
         </div>
 
         {/* Round indicator */}
@@ -527,8 +526,7 @@ export default function ExamPage() {
             </div>
           )}
           {warnings > 0 && (
-            <div className="flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full"
-              style={{ background: 'rgba(245,158,11,0.15)', color: '#F59E0B' }}>
+            <div className="flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full bg-amber-50 text-amber-600">
               <AlertTriangle size={12} /> {warnings}
             </div>
           )}

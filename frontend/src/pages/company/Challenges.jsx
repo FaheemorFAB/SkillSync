@@ -28,8 +28,8 @@ export default function CompanyChallengesPage() {
       <div className="page-header">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-white">My Challenges</h1>
-            <p className="text-gray-400 text-sm mt-1">{challenges.length} challenges posted</p>
+            <h1 className="text-2xl font-bold text-slate-900">My Challenges</h1>
+            <p className="text-slate-500 text-sm mt-1">{challenges.length} challenges posted</p>
           </div>
           <Link to="/company/challenges/create" className="btn btn-primary">
             <Plus size={16} /> New Challenge
@@ -44,16 +44,16 @@ export default function CompanyChallengesPage() {
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-2">
-                    <h3 className="font-bold text-white">{ch.title}</h3>
+                    <h3 className="font-bold text-slate-900">{ch.title}</h3>
                     <span className={`badge badge-${ch.difficulty?.toLowerCase()}`}>{ch.difficulty}</span>
                     <span className="badge" style={{
-                      background: ch.is_active ? 'rgba(16,185,129,0.12)' : 'rgba(107,114,128,0.12)',
-                      color: ch.is_active ? '#10B981' : '#9CA3AF'
+                      background: ch.is_active ? '#ECFDF5' : '#F1F5F9',
+                      color: ch.is_active ? '#10B981' : '#64748B'
                     }}>
                       {ch.is_active ? 'Active' : 'Paused'}
                     </span>
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-gray-500">
+                  <div className="flex items-center gap-4 text-xs text-slate-500">
                     <span className="flex items-center gap-1"><Users size={11} /> {ch.applicant_count} applicants</span>
                     <span className="flex items-center gap-1"><BarChart2 size={11} /> {ch.sector?.replace('_', ' ')}</span>
                   </div>

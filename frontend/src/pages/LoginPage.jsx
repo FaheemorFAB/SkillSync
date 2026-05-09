@@ -33,30 +33,26 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#0A0F1E' }}>
-      {/* Background orbs */}
-      <div className="orb orb-purple fixed" style={{ top: '-100px', left: '-200px', opacity: 0.4, pointerEvents: 'none' }} />
-      <div className="orb orb-blue fixed" style={{ bottom: '-100px', right: '-100px', opacity: 0.3, pointerEvents: 'none' }} />
-
+    <div className="min-h-screen flex items-center justify-center px-4 bg-slate-50">
       <div className="w-full max-w-md relative z-10">
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5 mb-6">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }}>
+              style={{ background: 'linear-gradient(135deg, #2563EB, #1D4ED8)' }}>
               <Rocket size={20} color="white" />
             </div>
-            <span className="font-bold text-xl text-white">SkillSync</span>
+            <span className="font-bold text-xl text-slate-900">SkillSync</span>
           </Link>
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome back</h1>
-          <p className="text-gray-400 text-sm">Sign in to your account</p>
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">Welcome back</h1>
+          <p className="text-slate-500 text-sm">Sign in to your account</p>
         </div>
 
         {/* Form card */}
         <div className="card p-8">
           {error && (
             <div className="flex items-center gap-2 p-3 rounded-lg mb-6 text-sm"
-              style={{ background: 'rgba(239,68,68,0.1)', color: '#FCA5A5', border: '1px solid rgba(239,68,68,0.2)' }}>
+              style={{ background: '#FEF2F2', color: '#DC2626', border: '1px solid #FECACA' }}>
               <AlertCircle size={15} />
               {error}
             </div>
@@ -93,7 +89,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors"
                 >
                   {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -116,19 +112,19 @@ export default function LoginPage() {
           </form>
 
           {/* Demo accounts */}
-          <div className="mt-6 p-4 rounded-lg" style={{ background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.15)' }}>
-            <p className="text-xs text-indigo-400 font-semibold mb-3">🚀 Demo Accounts (no setup needed)</p>
-            <div className="space-y-1.5 text-xs text-gray-400">
-              <div>Applicant: <span className="text-indigo-300 font-mono">demo@applicant.com</span> / <span className="font-mono">Demo123!</span></div>
-              <div>Company: <span className="text-cyan-300 font-mono">demo@company.com</span> / <span className="font-mono">Demo123!</span></div>
-              <div>Employee: <span className="text-green-300 font-mono">demo@employee.com</span> / <span className="font-mono">Demo123!</span></div>
+          <div className="mt-6 p-4 rounded-lg bg-slate-50 border border-slate-200">
+            <p className="text-xs text-blue-600 font-semibold mb-3">🚀 Demo Accounts (no setup needed)</p>
+            <div className="space-y-1.5 text-xs text-slate-600">
+              <div>Applicant: <span className="text-slate-900 font-mono font-medium">demo@applicant.com</span> / <span className="font-mono text-slate-900 font-medium">Demo123!</span></div>
+              <div>Company: <span className="text-slate-900 font-mono font-medium">demo@company.com</span> / <span className="font-mono text-slate-900 font-medium">Demo123!</span></div>
+              <div>Employee: <span className="text-slate-900 font-mono font-medium">demo@employee.com</span> / <span className="font-mono text-slate-900 font-medium">Demo123!</span></div>
             </div>
           </div>
         </div>
 
-        <p className="text-center text-sm text-gray-500 mt-6">
+        <p className="text-center text-sm text-slate-500 mt-6">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-indigo-400 font-medium hover:text-indigo-300 transition-colors">
+          <Link to="/signup" className="text-blue-600 font-medium hover:text-blue-700 transition-colors">
             Sign up free
           </Link>
         </p>

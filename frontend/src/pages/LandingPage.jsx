@@ -2,74 +2,73 @@ import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Rocket, Trophy, Shield, Zap, Users, Code2, Database, Cloud,
-  Brain, ChevronRight, Star, CheckCircle, TrendingUp, ArrowRight, Lock, Video
+  Brain, ChevronRight, Star, CheckCircle, TrendingUp, ArrowRight, Lock, Video, Lightbulb
 } from 'lucide-react'
 
 const SECTORS = [
-  { icon: Code2, name: 'Web Development', color: '#6366F1', desc: 'Frontend, Backend & Fullstack' },
-  { icon: Brain, name: 'Data Science & AI', color: '#8B5CF6', desc: 'ML, Data Eng & GenAI' },
-  { icon: Cloud, name: 'Cloud & DevOps', color: '#06B6D4', desc: 'IaC, Docker/K8s & Architecture' },
-  { icon: Shield, name: 'Cybersecurity', color: '#EF4444', desc: 'PenTest, Auditing & Threat Intel' },
-  { icon: Database, name: 'Mobile Dev', color: '#10B981', desc: 'Flutter, React Native & Native' },
+  { icon: Code2, name: 'Web Development', color: '#2563EB', desc: 'Frontend, Backend & Fullstack' },
+  { icon: Brain, name: 'Data Science & AI', color: '#1D4ED8', desc: 'ML, Data Eng & GenAI' },
+  { icon: Cloud, name: 'Cloud & DevOps', color: '#0891B2', desc: 'IaC, Docker/K8s & Architecture' },
+  { icon: Shield, name: 'Cybersecurity', color: '#DC2626', desc: 'PenTest, Auditing & Threat Intel' },
+  { icon: Database, name: 'Mobile Dev', color: '#059669', desc: 'Flutter, React Native & Native' },
 ]
 
 const ROUNDS = [
   {
     num: 1,
-    name: 'Aptitude',
-    desc: 'AI-generated logic, pattern recognition & EQ assessment',
-    color: '#6366F1',
+    name: 'Strategic Aptitude',
+    desc: 'AI-generated logic, pattern recognition & critical thinking assessment.',
+    color: '#2563EB',
     icon: Brain,
     detail: '20 adaptive MCQs · 30 min'
   },
   {
     num: 2,
-    name: 'Technical',
-    desc: 'Core syntax & algorithm challenges via live code execution',
-    color: '#8B5CF6',
+    name: 'Technical Innovation',
+    desc: 'Core syntax & problem-solving challenges via live code execution.',
+    color: '#1D4ED8',
     icon: Code2,
-    detail: 'LeetCode-style · 45 min'
+    detail: 'Execution-focused · 45 min'
   },
   {
     num: 3,
-    name: 'Industry Problem',
-    desc: 'Real-world domain-specific scenario solving',
-    color: '#06B6D4',
-    icon: Rocket,
+    name: 'Future-Proof Scenario',
+    desc: 'Real-world domain-specific scenario solving. Prove your vision.',
+    color: '#0891B2',
+    icon: Lightbulb,
     detail: 'Open-ended · 60 min'
   },
 ]
 
 const STATS = [
-  { label: 'Active Candidates', value: '12,400+' },
-  { label: 'Companies Hiring', value: '340+' },
+  { label: 'Active Innovators', value: '12,400+' },
+  { label: 'Future-Ready Orgs', value: '340+' },
   { label: 'Skills Verified', value: '98,000+' },
-  { label: 'Avg Salary Increase', value: '32%' },
+  { label: 'Avg ROI Increase', value: '32%' },
 ]
 
 export default function LandingPage() {
   return (
-    <div style={{ background: '#0A0F1E', minHeight: '100vh' }}>
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       {/* === NAVBAR === */}
-      <nav className="fixed top-0 w-full z-50 glass border-b border-white/5">
+      <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-              style={{ background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }}>
-              <Rocket size={18} color="white" />
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-blue-600 text-white shadow-md">
+              <Rocket size={18} />
             </div>
-            <span className="font-bold text-xl tracking-tight text-white">SkillSync</span>
+            <span className="font-bold text-xl tracking-tight text-slate-900">SkillSync</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-1">
-            <Link to="/leaderboard" className="nav-link">Leaderboard</Link>
-            <a href="#how-it-works" className="nav-link">How It Works</a>
-            <a href="#sectors" className="nav-link">Sectors</a>
+            <Link to="/leaderboard" className="nav-link font-medium">Leaderboard</Link>
+            <a href="#how-it-works" className="nav-link font-medium">Methodology</a>
+            <a href="#sectors" className="nav-link font-medium">Sectors</a>
           </div>
 
           <div className="flex items-center gap-3">
             <Link to="/login" className="btn btn-secondary btn-sm">Sign In</Link>
-            <Link to="/signup" className="btn btn-primary btn-sm">
+            <Link to="/signup" className="btn btn-primary btn-sm shadow-md">
               Get Started <ArrowRight size={14} />
             </Link>
           </div>
@@ -77,119 +76,87 @@ export default function LandingPage() {
       </nav>
 
       {/* === HERO === */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        {/* Background orbs */}
-        <div className="orb orb-purple" style={{ top: '-100px', left: '-200px', opacity: 0.6 }} />
-        <div className="orb orb-blue" style={{ bottom: '0', right: '-100px', opacity: 0.5 }} />
-        <div className="orb orb-violet" style={{ top: '40%', left: '40%', transform: 'translate(-50%, -50%)', opacity: 0.3 }} />
-
-        {/* Grid overlay */}
-        <div className="absolute inset-0" style={{
-          backgroundImage: `linear-gradient(rgba(99,102,241,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.05) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px'
-        }} />
-
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-16 bg-gradient-to-b from-slate-50 to-blue-50/50">
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-sm font-medium"
-            style={{ background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)', color: '#A5B4FC' }}>
-            <Zap size={14} />
-            Skills-Based Hiring Platform
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-sm font-semibold bg-blue-100 text-blue-700 border border-blue-200 shadow-sm">
+            <Lightbulb size={14} />
+            The Future Belongs to Those Who Innovate Today
             <span className="live-dot ml-1" />
           </div>
 
           {/* Headline */}
-          <h1 className="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-            Bypass Degree Inflation.<br />
-            <span className="gradient-text">Prove Your Skill.</span>
+          <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-6 leading-tight tracking-tight">
+            Future-Proof Your Business.<br />
+            <span className="text-blue-600">Hire for Tomorrow.</span>
           </h1>
 
-          <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Connect to roles through <strong className="text-white">verified problem-solving</strong> and AI-driven skill assessment.
-            Stop submitting resumes. Start solving problems.
+          <p className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed font-medium">
+            Stop relying on outdated credentials. Connect to elite talent through <strong className="text-slate-900">verified problem-solving</strong> and AI-driven skill assessment. 
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Link to="/signup?role=applicant" className="btn btn-primary btn-lg">
-              <Rocket size={18} />
-              Start as Applicant
-            </Link>
-            <Link to="/signup?role=company" className="btn btn-secondary btn-lg">
+            <Link to="/signup?role=company" className="btn btn-primary btn-lg shadow-lg">
               <Users size={18} />
-              Hire Talent
+              Future-Proof My Team
             </Link>
-            <Link to="/leaderboard" className="btn btn-secondary btn-lg">
-              <Trophy size={18} />
-              View Leaderboard
+            <Link to="/signup?role=applicant" className="btn btn-secondary btn-lg bg-white border-slate-300 shadow-sm">
+              <Rocket size={18} className="text-blue-600" />
+              Prove My Skills
             </Link>
           </div>
 
           {/* Stats row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto mt-8 bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
             {STATS.map((s) => (
               <div key={s.label} className="text-center">
-                <div className="text-3xl font-black gradient-text mb-1">{s.value}</div>
-                <div className="text-xs text-gray-500">{s.label}</div>
+                <div className="text-3xl font-black text-blue-600 mb-1 tracking-tight">{s.value}</div>
+                <div className="text-sm font-medium text-slate-500 uppercase tracking-wide">{s.label}</div>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-600 text-xs">
-          <span>Scroll to explore</span>
-          <div className="w-5 h-8 rounded-full border border-gray-700 flex items-start justify-center p-1">
-            <div className="w-1 h-2 bg-indigo-500 rounded-full animate-bounce" />
           </div>
         </div>
       </section>
 
       {/* === HOW IT WORKS === */}
-      <section id="how-it-works" className="py-24 relative">
+      <section id="how-it-works" className="py-24 relative bg-white border-y border-slate-100">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium mb-4"
-              style={{ background: 'rgba(99,102,241,0.1)', color: '#818CF8' }}>
-              The 3-Round System
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold mb-4 bg-blue-50 text-blue-700 uppercase tracking-wider">
+              Methodology
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Assessment That <span className="gradient-text">Actually Works</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
+              Assessment That <span className="text-blue-600">Drives Innovation</span>
             </h2>
-            <p className="text-gray-400 max-w-xl mx-auto">
-              Each round is designed to reveal a different dimension of your ability — beyond what any resume can show.
+            <p className="text-slate-600 max-w-xl mx-auto font-medium">
+              We replace static resumes with a 3-round architecture designed to reveal true problem-solving capabilities and strategic vision.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {ROUNDS.map((round, i) => (
-              <div key={round.num} className="card p-8 relative overflow-hidden group">
-                {/* Glow effect */}
-                <div className="absolute top-0 right-0 w-40 h-40 rounded-full blur-3xl opacity-10 group-hover:opacity-20 transition-opacity"
-                  style={{ background: round.color }} />
-
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 font-black text-xl text-white"
-                  style={{ background: `linear-gradient(135deg, ${round.color}, ${round.color}aa)` }}>
+              <div key={round.num} className="card p-8 relative overflow-hidden group hover:border-blue-300">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 font-black text-xl bg-blue-100 text-blue-700">
                   {round.num}
                 </div>
 
-                <div className="badge mb-4" style={{ background: `${round.color}18`, color: round.color, border: `1px solid ${round.color}30` }}>
-                  Round {round.num}
+                <div className="badge mb-4 bg-slate-100 text-slate-700 border-slate-200">
+                  Phase {round.num}
                 </div>
 
-                <h3 className="text-xl font-bold text-white mb-3">{round.name}</h3>
-                <p className="text-gray-400 text-sm mb-4 leading-relaxed">{round.desc}</p>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">{round.name}</h3>
+                <p className="text-slate-600 text-sm mb-4 leading-relaxed">{round.desc}</p>
 
-                <div className="flex items-center gap-2 text-xs font-medium"
-                  style={{ color: round.color }}>
-                  <round.icon size={13} />
+                <div className="flex items-center gap-2 text-xs font-semibold text-blue-600">
+                  <round.icon size={14} />
                   {round.detail}
                 </div>
 
                 {/* Connector arrow */}
                 {i < ROUNDS.length - 1 && (
-                  <div className="absolute -right-3 top-1/2 -translate-y-1/2 z-10 hidden md:block">
-                    <ChevronRight size={24} style={{ color: round.color }} />
+                  <div className="absolute -right-3 top-1/2 -translate-y-1/2 z-10 hidden md:block text-slate-300">
+                    <ChevronRight size={24} />
                   </div>
                 )}
               </div>
@@ -199,13 +166,13 @@ export default function LandingPage() {
       </section>
 
       {/* === SECTORS === */}
-      <section id="sectors" className="py-24" style={{ background: 'rgba(255,255,255,0.02)' }}>
+      <section id="sectors" className="py-24 bg-slate-50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">
-              5 Industry <span className="gradient-text">Sectors</span>
+            <h2 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">
+              Innovation <span className="text-blue-600">Sectors</span>
             </h2>
-            <p className="text-gray-400">Find challenges specific to your domain expertise</p>
+            <p className="text-slate-600 font-medium">Recruit visionary talent across specialized domains.</p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -213,17 +180,13 @@ export default function LandingPage() {
               <Link
                 key={sector.name}
                 to="/signup?role=applicant"
-                className="sector-card group relative overflow-hidden"
-                style={{ borderColor: 'rgba(255,255,255,0.07)' }}
+                className="sector-card group relative overflow-hidden bg-white hover:bg-blue-50"
               >
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity rounded-2xl"
-                  style={{ background: sector.color }} />
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4"
-                  style={{ background: `${sector.color}18` }}>
-                  <sector.icon size={22} style={{ color: sector.color }} />
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4 bg-slate-100 group-hover:bg-blue-100 transition-colors">
+                  <sector.icon size={22} className="text-blue-600" />
                 </div>
-                <h3 className="font-bold text-sm text-white text-center mb-1">{sector.name}</h3>
-                <p className="text-xs text-gray-500 text-center leading-relaxed">{sector.desc}</p>
+                <h3 className="font-bold text-sm text-slate-900 text-center mb-1">{sector.name}</h3>
+                <p className="text-xs text-slate-500 text-center leading-relaxed">{sector.desc}</p>
               </Link>
             ))}
           </div>
@@ -231,74 +194,70 @@ export default function LandingPage() {
       </section>
 
       {/* === ANTI-CHEAT FEATURE === */}
-      <section className="py-24">
+      <section className="py-24 bg-white border-y border-slate-100">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="badge badge-live mb-6">
+              <div className="badge badge-live mb-6 border-emerald-200">
                 <Shield size={11} />
-                SkillSync Anti-Cheat
+                Enterprise-Grade Security
               </div>
-              <h2 className="text-4xl font-bold text-white mb-6">
-                AI-Powered<br /><span className="gradient-text">Integrity Monitoring</span>
+              <h2 className="text-4xl font-bold text-slate-900 mb-6 tracking-tight">
+                Integrity You Can<br /><span className="text-blue-600">Trust</span>
               </h2>
-              <p className="text-gray-400 mb-8 leading-relaxed">
-                Our behavioral monitoring system goes beyond simple blocking —
-                it analyzes patterns to ensure fair assessments for everyone.
+              <p className="text-slate-600 mb-8 leading-relaxed font-medium">
+                Our behavioral monitoring system goes beyond simple blocking — it analyzes patterns to ensure the talent you hire is truly capable of the innovation they claim.
               </p>
               <div className="space-y-4">
                 {[
-                  { icon: Lock, text: 'Fullscreen enforcement with violation tracking' },
-                  { icon: Shield, text: 'Tab-switch & focus-loss detection' },
-                  { icon: Brain, text: 'Behavioral anomaly scoring' },
-                  { icon: CheckCircle, text: 'Copy-paste prevention in exam zone' },
+                  { icon: Lock, text: 'Strict environment lockdown & tracking' },
+                  { icon: Shield, text: 'Tab-switch & focus-loss prevention' },
+                  { icon: Brain, text: 'AI-driven anomaly detection' },
+                  { icon: CheckCircle, text: 'Secure code-execution sandboxing' },
                 ].map(({ icon: Icon, text }) => (
                   <div key={text} className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-                      style={{ background: 'rgba(16,185,129,0.12)' }}>
-                      <Icon size={15} style={{ color: '#10B981' }} />
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-emerald-100 text-emerald-600">
+                      <Icon size={15} />
                     </div>
-                    <span className="text-gray-300 text-sm">{text}</span>
+                    <span className="text-slate-700 font-medium text-sm">{text}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Visual mockup */}
-            <div className="card p-6">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-sm font-semibold text-white">Integrity Monitor</span>
+            <div className="card p-6 shadow-xl border-slate-200">
+              <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-100">
+                <span className="text-sm font-bold text-slate-800">Integrity Monitor</span>
                 <span className="badge badge-live text-xs">
                   <span className="live-dot" style={{ width: '6px', height: '6px' }} />
                   Active
                 </span>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {[
-                  { label: 'Focus Events', value: 'Normal', color: '#10B981', pct: 100 },
-                  { label: 'Mouse Movement', value: 'Natural', color: '#10B981', pct: 88 },
-                  { label: 'Typing Rhythm', value: 'Consistent', color: '#F59E0B', pct: 76 },
-                  { label: 'Copy Attempts', value: '0 detected', color: '#10B981', pct: 100 },
-                  { label: 'Tab Switches', value: '0 violations', color: '#10B981', pct: 100 },
+                  { label: 'Focus Events', value: 'Normal', color: '#059669', pct: 100 },
+                  { label: 'Code Execution', value: 'Sandboxed', color: '#059669', pct: 100 },
+                  { label: 'Typing Rhythm', value: 'Consistent', color: '#D97706', pct: 85 },
+                  { label: 'Copy Attempts', value: '0 detected', color: '#059669', pct: 100 },
                 ].map((item) => (
                   <div key={item.label}>
-                    <div className="flex justify-between text-xs mb-1">
-                      <span className="text-gray-400">{item.label}</span>
-                      <span style={{ color: item.color }} className="font-medium">{item.value}</span>
+                    <div className="flex justify-between text-xs mb-1.5 font-semibold">
+                      <span className="text-slate-500 uppercase tracking-wider text-[10px]">{item.label}</span>
+                      <span style={{ color: item.color }}>{item.value}</span>
                     </div>
-                    <div className="progress-bar">
+                    <div className="progress-bar bg-slate-100">
                       <div className="progress-fill" style={{
                         width: `${item.pct}%`,
-                        background: `linear-gradient(90deg, ${item.color}88, ${item.color})`
+                        background: item.color
                       }} />
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="mt-4 p-3 rounded-lg text-xs flex items-center gap-2 font-medium"
-                style={{ background: 'rgba(16,185,129,0.1)', color: '#10B981' }}>
-                <CheckCircle size={14} />
-                Integrity Score: 96/100 — Excellent
+              <div className="mt-5 p-3 rounded-lg text-sm flex items-center gap-2 font-bold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                <CheckCircle size={16} />
+                Audit Passed: Verified Candidate
               </div>
             </div>
           </div>
@@ -306,41 +265,41 @@ export default function LandingPage() {
       </section>
 
       {/* === FOR COMPANIES === */}
-      <section className="py-24" style={{ background: 'rgba(255,255,255,0.02)' }}>
+      <section className="py-24 bg-slate-50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">
-              Built for <span className="gradient-text">Forward-Thinking Companies</span>
+            <h2 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">
+              Built for <span className="text-blue-600">Forward-Thinking Leaders</span>
             </h2>
+            <p className="text-slate-600 font-medium">Equip your organization with the tools to innovate and adapt.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
+                icon: Lightbulb,
+                color: '#2563EB',
+                title: 'Future-Proof Strategy AI',
+                desc: 'Input your tech stack and get tailored AI blueprints on how your organization can remain relevant and innovate today.'
+              },
+              {
                 icon: Brain,
-                color: '#6366F1',
-                title: 'AI Problem Creator',
-                desc: 'Describe a business problem and let our AI generate relevant, sector-specific test questions automatically.'
+                color: '#1D4ED8',
+                title: 'AI Challenge Creator',
+                desc: 'Describe a business hurdle. Our AI generates a comprehensive 3-round assessment to find the exact problem-solver you need.'
               },
               {
                 icon: Users,
-                color: '#06B6D4',
-                title: 'Internal Match Engine',
-                desc: 'Instantly compare job requirements against your existing team\'s verified skill profiles to find internal candidates.'
-              },
-              {
-                icon: Video,
-                color: '#10B981',
-                title: 'Integrated Interview Room',
-                desc: '1-click Jitsi Meet video interviews with top leaderboard candidates — no Zoom account needed.'
+                color: '#0891B2',
+                title: 'Internal Innovation Match',
+                desc: 'Compare new challenges against your existing team\'s verified skill profiles to uncover hidden talent within your own ranks.'
               },
             ].map((feat) => (
-              <div key={feat.title} className="card p-6">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
-                  style={{ background: `${feat.color}18` }}>
-                  <feat.icon size={22} style={{ color: feat.color }} />
+              <div key={feat.title} className="card p-8 bg-white hover:border-blue-300 transition-all shadow-sm">
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 bg-blue-50 text-blue-600">
+                  <feat.icon size={22} />
                 </div>
-                <h3 className="text-lg font-bold text-white mb-3">{feat.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{feat.desc}</p>
+                <h3 className="text-lg font-bold text-slate-900 mb-3">{feat.title}</h3>
+                <p className="text-slate-600 text-sm leading-relaxed font-medium">{feat.desc}</p>
               </div>
             ))}
           </div>
@@ -348,26 +307,23 @@ export default function LandingPage() {
       </section>
 
       {/* === CTA BANNER === */}
-      <section className="py-24">
+      <section className="py-24 bg-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <div className="card p-12 relative overflow-hidden">
-            <div className="orb orb-purple absolute" style={{ top: '-50%', left: '-20%', opacity: 0.4 }} />
-            <div className="orb orb-blue absolute" style={{ bottom: '-50%', right: '-20%', opacity: 0.3 }} />
+          <div className="card p-12 bg-blue-600 text-white border-none shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-32 bg-blue-500 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/3"></div>
+            <div className="absolute bottom-0 left-0 p-32 bg-blue-700 rounded-full blur-3xl opacity-50 translate-y-1/2 -translate-x-1/3"></div>
+            
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-                Ready to <span className="gradient-text">Prove Your Worth?</span>
+              <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">
+                Ready to Innovate Today?
               </h2>
-              <p className="text-gray-400 mb-8 text-lg">
-                Join thousands of professionals replacing résumés with results.
+              <p className="text-blue-100 mb-10 text-lg font-medium max-w-2xl mx-auto">
+                Join the enterprise platforms replacing outdated hiring with verified, future-proof skill validation.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/signup?role=applicant" className="btn btn-primary btn-lg">
-                  <Rocket size={18} />
-                  Start Your Journey
-                </Link>
-                <Link to="/signup?role=company" className="btn btn-secondary btn-lg">
+                <Link to="/signup?role=company" className="btn bg-white text-blue-700 hover:bg-slate-50 btn-lg shadow-lg font-bold">
                   <Users size={18} />
-                  Post a Challenge
+                  Future-Proof My Organization
                 </Link>
               </div>
             </div>
@@ -376,40 +332,39 @@ export default function LandingPage() {
       </section>
 
       {/* === FOOTER === */}
-      <footer className="border-t border-white/5 py-12">
+      <footer className="border-t border-slate-200 py-12 bg-slate-50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 rounded-lg flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }}>
-                  <Rocket size={14} color="white" />
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-blue-600 text-white">
+                  <Rocket size={16} />
                 </div>
-                <span className="font-bold text-white">SkillSync</span>
+                <span className="font-bold text-slate-900 text-lg tracking-tight">SkillSync</span>
               </div>
-              <p className="text-sm text-gray-500">
-                The skills-based hiring platform that bypasses degree inflation.
+              <p className="text-sm text-slate-500 font-medium leading-relaxed">
+                Empowering businesses to innovate today by hiring for tomorrow.
               </p>
             </div>
             {[
-              { title: 'Platform', links: ['Challenges', 'Leaderboard', 'Interview Room', 'Sectors'] },
-              { title: 'Company', links: ['Post Challenge', 'Internal Match', 'Analytics', 'Pricing'] },
+              { title: 'Platform', links: ['Innovation Strategy', 'AI Challenges', 'Leaderboard', 'Security'] },
+              { title: 'Enterprise', links: ['Future-Proofing', 'Internal Match', 'Analytics', 'Pricing'] },
               { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Policy'] },
             ].map((col) => (
               <div key={col.title}>
-                <h4 className="font-semibold text-white text-sm mb-4">{col.title}</h4>
-                <ul className="space-y-2">
+                <h4 className="font-bold text-slate-900 text-sm mb-4 uppercase tracking-wider">{col.title}</h4>
+                <ul className="space-y-3">
                   {col.links.map(link => (
                     <li key={link}>
-                      <Link to="/" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">{link}</Link>
+                      <Link to="/" className="text-sm text-slate-500 hover:text-blue-600 font-medium transition-colors">{link}</Link>
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
-          <div className="border-t border-white/5 pt-6 text-center text-xs text-gray-600">
-            © 2026 SkillSync · FutureProof. All rights reserved.
+          <div className="border-t border-slate-200 pt-8 text-center text-sm font-medium text-slate-400">
+            © 2026 SkillSync Enterprise. All rights reserved.
           </div>
         </div>
       </footer>

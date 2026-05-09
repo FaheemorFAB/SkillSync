@@ -16,6 +16,7 @@ import CompanyChallengesPage from './pages/company/Challenges'
 import CreateChallengePage from './pages/company/CreateChallenge'
 import InterviewRoomsPage from './pages/company/InterviewRooms'
 import InternalMatchPage from './pages/company/InternalMatch'
+import CompanyFutureProof from './pages/company/CompanyFutureProof'
 import ProfilePage from './pages/ProfilePage'
 import NotFound from './pages/NotFound'
 
@@ -25,14 +26,14 @@ import AppLayout from './components/layout/AppLayout'
 // Loading screen
 function LoadingScreen() {
   return (
-    <div className="min-h-screen flex items-center justify-center" style={{background: '#0A0F1E'}}>
+    <div className="min-h-screen flex items-center justify-center bg-slate-50">
       <div className="text-center">
         <div className="relative w-16 h-16 mx-auto mb-6">
           <div className="absolute inset-0 rounded-full border-2 border-indigo-500/20"></div>
           <div className="absolute inset-0 rounded-full border-t-2 border-indigo-500 animate-spin"></div>
           <div className="absolute inset-2 rounded-full border-t-2 border-purple-500 animate-spin" style={{animationDirection:'reverse', animationDuration:'0.8s'}}></div>
         </div>
-        <p className="text-gray-400 text-sm">Loading SkillSync...</p>
+        <p className="text-slate-500 text-sm font-medium">Loading SkillSync...</p>
       </div>
     </div>
   )
@@ -110,6 +111,7 @@ export default function App() {
         <Route path="challenges/create" element={<CreateChallengePage />} />
         <Route path="interviews" element={<InterviewRoomsPage />} />
         <Route path="matches" element={<InternalMatchPage />} />
+        <Route path="future-proof" element={<CompanyFutureProof />} />
         <Route path="profile" element={<ProfilePage />} />
         <Route index element={<Navigate to="dashboard" />} />
       </Route>

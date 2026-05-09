@@ -20,6 +20,7 @@ const navConfig = {
     { to: '/company/challenges', icon: Briefcase, label: 'My Challenges' },
     { to: '/company/challenges/create', icon: Plus, label: 'Create Challenge' },
     { to: '/company/matches', icon: GitBranch, label: 'Internal Match' },
+    { to: '/company/future-proof', icon: Zap, label: 'Innovation Strategy' },
     { to: '/company/interviews', icon: Video, label: 'Interview Rooms' },
     { to: '/leaderboard', icon: Trophy, label: 'Leaderboard', external: true },
     { to: '/company/profile', icon: UserCircle, label: 'Profile' },
@@ -60,13 +61,13 @@ export default function AppLayout({ role }) {
   const SidebarContent = () => (
     <>
       {/* Logo */}
-      <div className="p-6 border-b border-white/5">
+      <div className="p-6 border-b border-slate-200">
         <Link to="/" className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-            style={{ background: `linear-gradient(135deg, ${accentColor}, #8B5CF6)` }}>
+            style={{ background: `linear-gradient(135deg, ${accentColor}, #2563EB)` }}>
             <Rocket size={16} color="white" />
           </div>
-          <span className="font-bold text-lg tracking-tight text-white">SkillSync</span>
+          <span className="font-bold text-lg tracking-tight text-slate-900">SkillSync</span>
         </Link>
       </div>
 
@@ -103,18 +104,18 @@ export default function AppLayout({ role }) {
       </nav>
 
       {/* User section */}
-      <div className="p-4 border-t border-white/5">
+      <div className="p-4 border-t border-slate-200">
         {profile && (
-          <div className="flex items-center gap-3 mb-3 p-2 rounded-10 hover:bg-white/5 transition-colors cursor-pointer rounded-lg"
+          <div className="flex items-center gap-3 mb-3 p-2 rounded-10 hover:bg-slate-50 transition-colors cursor-pointer rounded-lg"
             onClick={() => navigate(`/${role === 'applicant' ? 'app' : role}/profile`)}>
             <img
-              src={profile.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(profile.full_name || 'User')}&backgroundColor=6366f1`}
+              src={profile.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(profile.full_name || 'User')}&backgroundColor=2563eb`}
               alt={profile.full_name}
-              className="w-9 h-9 rounded-full border border-white/10"
+              className="w-9 h-9 rounded-full border border-slate-200"
             />
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-white truncate">{profile.full_name || 'User'}</p>
-              <p className="text-xs text-gray-500 truncate">{profile.email}</p>
+              <p className="text-sm font-semibold text-slate-900 truncate">{profile.full_name || 'User'}</p>
+              <p className="text-xs text-slate-500 truncate">{profile.email}</p>
             </div>
           </div>
         )}
@@ -139,7 +140,7 @@ export default function AppLayout({ role }) {
       {/* Mobile Overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/60 z-90 md:hidden"
+          className="fixed inset-0 bg-slate-900/40 z-90 md:hidden"
           style={{ zIndex: 99 }}
           onClick={() => setSidebarOpen(false)}
         />
@@ -158,7 +159,7 @@ export default function AppLayout({ role }) {
       {/* Main Content */}
       <div className="main-content">
         {/* Top bar */}
-        <div className="sticky top-0 z-50 glass border-b border-white/5 px-6 py-3 flex items-center justify-between">
+        <div className="sticky top-0 z-50 bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between">
           <button
             className="md:hidden btn btn-secondary btn-sm"
             onClick={() => setSidebarOpen(true)}
@@ -170,7 +171,7 @@ export default function AppLayout({ role }) {
 
           <div className="flex items-center gap-3">
             {/* Live indicator */}
-            <div className="hidden md:flex items-center gap-2 text-xs text-gray-400">
+            <div className="hidden md:flex items-center gap-2 text-xs text-slate-400">
               <span className="live-dot"></span>
               Live
             </div>
@@ -180,9 +181,9 @@ export default function AppLayout({ role }) {
             </button>
 
             <img
-              src={profile?.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=User&backgroundColor=6366f1`}
+              src={profile?.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=User&backgroundColor=2563eb`}
               alt="avatar"
-              className="w-8 h-8 rounded-full border border-white/10 cursor-pointer"
+              className="w-8 h-8 rounded-full border border-slate-200 cursor-pointer"
               onClick={() => navigate(`/${role === 'applicant' ? 'app' : role}/profile`)}
             />
           </div>

@@ -48,10 +48,10 @@ export default function CompanyDashboard() {
       <div className="page-header">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-white">
+            <h1 className="text-2xl font-bold text-slate-900">
               {profile?.company_name || 'Company'} Dashboard
             </h1>
-            <p className="text-gray-400 text-sm mt-1">Manage your challenges and top talent</p>
+            <p className="text-slate-500 text-sm mt-1">Manage your challenges and top talent</p>
           </div>
           <Link to="/company/challenges/create" className="btn btn-primary">
             <Plus size={16} /> Post Challenge
@@ -71,7 +71,7 @@ export default function CompanyDashboard() {
         {/* Top candidates */}
         <section>
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <Trophy size={18} style={{ color: '#F59E0B' }} /> Top Candidates
             </h2>
             <Link to="/leaderboard" className="btn btn-secondary btn-sm">Full Leaderboard <ArrowRight size={13} /></Link>
@@ -79,18 +79,18 @@ export default function CompanyDashboard() {
           <div className="space-y-3">
             {MOCK_TOP.map(c => (
               <div key={c.name} className="lb-row top-3">
-                <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs text-white"
+                <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs text-slate-900"
                   style={{ background: c.rank === 1 ? 'linear-gradient(135deg,#F59E0B,#EF4444)' : c.rank === 2 ? 'linear-gradient(135deg,#9CA3AF,#6B7280)' : 'linear-gradient(135deg,#CD7F32,#92400E)' }}>
                   #{c.rank}
                 </div>
                 <img src={c.avatar} alt={c.name} className="w-10 h-10 rounded-full" />
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-white text-sm">{c.name}</p>
-                  <p className="text-xs text-gray-500">{c.challenge}</p>
+                  <p className="font-semibold text-slate-900 text-sm">{c.name}</p>
+                  <p className="text-xs text-slate-500">{c.challenge}</p>
                 </div>
                 <div className="text-right">
                   <p className="font-black text-lg gradient-text">{c.score}</p>
-                  <p className="text-xs text-gray-500 flex items-center gap-1 justify-end"><Star size={9} className="text-yellow-500" /> pts</p>
+                  <p className="text-xs text-slate-500 flex items-center gap-1 justify-end"><Star size={9} className="text-yellow-500" /> pts</p>
                 </div>
                 <Link to="/company/interviews" className="btn btn-secondary btn-sm hidden md:flex gap-2">
                   <Video size={13} /> Interview
@@ -103,7 +103,7 @@ export default function CompanyDashboard() {
         {/* My challenges */}
         <section>
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-lg font-bold text-white">My Challenges</h2>
+            <h2 className="text-lg font-bold text-slate-900">My Challenges</h2>
             <Link to="/company/challenges" className="btn btn-secondary btn-sm">Manage <ArrowRight size={13} /></Link>
           </div>
           <div className="space-y-3">
@@ -111,11 +111,11 @@ export default function CompanyDashboard() {
               <div key={ch.id} className="card p-5 flex items-center gap-4">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-white text-sm">{ch.title}</h3>
+                    <h3 className="font-semibold text-slate-900 text-sm">{ch.title}</h3>
                     <span className={`badge badge-${ch.difficulty?.toLowerCase()}`}>{ch.difficulty}</span>
-                    {!ch.is_active && <span className="badge" style={{ background: 'rgba(107,114,128,0.15)', color: '#9CA3AF' }}>Closed</span>}
+                    {!ch.is_active && <span className="badge" style={{ background: '#F1F5F9', color: '#64748B' }}>Closed</span>}
                   </div>
-                  <p className="text-xs text-gray-500 flex items-center gap-2">
+                  <p className="text-xs text-slate-500 flex items-center gap-2">
                     <Users size={11} /> {ch.applicant_count} applicants
                     <Clock size={11} className="ml-2" /> {new Date(ch.created_at).toLocaleDateString()}
                   </p>
@@ -132,7 +132,7 @@ export default function CompanyDashboard() {
 
         {/* Quick actions */}
         <section>
-          <h2 className="text-lg font-bold text-white mb-4">Quick Actions</h2>
+          <h2 className="text-lg font-bold text-slate-900 mb-4">Quick Actions</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {[
               { label: 'Post Challenge', icon: Plus, to: '/company/challenges/create', color: '#6366F1' },
@@ -145,7 +145,7 @@ export default function CompanyDashboard() {
                   style={{ background: `${a.color}15` }}>
                   <a.icon size={18} style={{ color: a.color }} />
                 </div>
-                <p className="text-xs font-medium text-gray-300">{a.label}</p>
+                <p className="text-xs font-medium text-slate-700">{a.label}</p>
               </Link>
             ))}
           </div>

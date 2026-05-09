@@ -47,37 +47,27 @@ export function AuthProvider({ children }) {
     }
   }
 
-  const signUp = async ({ email, password, fullName, role, companyName }) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
-          role,
-          company_name: companyName || null,
-        },
-      },
+  const signInWithGoogle = async (credential, role = null, companyName = null) => {
+    const { data, error } = await supabase.auth.signInWithIdToken({
+      provider: 'google',
+      token: credential,
     })
 
     if (!error && data.user) {
-      // Update profile with additional info
-      await supabase
-        .from('profiles')
-        .update({
-          full_name: fullName,
-          role,
-          company_name: companyName || null,
-          avatar_url: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(fullName)}&backgroundColor=6366f1`,
-        })
-        .eq('id', data.user.id)
+      if (role) {
+        // Update profile with selected role during signup
+        await supabase
+          .from('profiles')
+          .update({
+            role,
+            company_name: companyName || null,
+          })
+          .eq('id', data.user.id)
+      }
+      fetchProfile(data.user.id)
     }
 
     return { data, error }
-  }
-
-  const signIn = async ({ email, password }) => {
-    return await supabase.auth.signInWithPassword({ email, password })
   }
 
   const signOut = async () => {
@@ -106,8 +96,7 @@ export function AuthProvider({ children }) {
     user,
     profile,
     loading,
-    signUp,
-    signIn,
+    signInWithGoogle,
     signOut,
     updateProfile,
     refreshProfile: () => user && fetchProfile(user.id),

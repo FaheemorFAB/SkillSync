@@ -15,6 +15,10 @@ const MOCK_TOP = [
   { name: 'James Liu', score: 920, avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=James', challenge: 'FastAPI Microservice', rank: 2 },
   { name: 'Priya Sharma', score: 878, avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Priya', challenge: 'ML Model Deployment', rank: 3 },
 ]
+const MOCK_EMPLOYEES = [
+  { name: 'Sarah Chen', role: 'Senior Data Scientist', status: 'Active', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah' },
+  { name: 'Mike Peters', role: 'DevOps Lead', status: 'Active', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike' },
+]
 
 function StatCard({ icon: Icon, label, value, color }) {
   return (
@@ -125,6 +129,28 @@ export default function CompanyDashboard() {
                     <Zap size={12} /> Match
                   </Link>
                 </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Employees */}
+        <section>
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Users size={18} style={{ color: '#06B6D4' }} /> Our Employees
+            </h2>
+            <Link to="/company/matches" className="btn btn-secondary btn-sm">Nominate <ArrowRight size={13} /></Link>
+          </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            {MOCK_EMPLOYEES.map(emp => (
+              <div key={emp.name} className="card p-4 flex items-center gap-4 border-l-4" style={{ borderLeftColor: '#06B6D4' }}>
+                <img src={emp.avatar} alt={emp.name} className="w-12 h-12 rounded-full bg-slate-50 border border-slate-200" />
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-bold text-slate-900">{emp.name}</h3>
+                  <p className="text-sm text-slate-500">{emp.role}</p>
+                </div>
+                <span className="badge bg-green-100 text-green-700 border-green-200">{emp.status}</span>
               </div>
             ))}
           </div>

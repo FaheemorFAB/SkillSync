@@ -6,6 +6,9 @@ import { AuthProvider } from './contexts/AuthContext.jsx'
 import { ToastProvider, _registerToast } from './lib/toast.jsx'
 import toast from './lib/toast.jsx'
 import './index.css'
+import { GoogleOAuthProvider } from '@react-oauth/google'
+
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
 // Register the global toast function
 // This will be set when ToastProvider mounts via a small bridge component
@@ -23,12 +26,14 @@ function ToastBridge({ children }) {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ToastProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </ToastProvider>
-    </BrowserRouter>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <BrowserRouter>
+        <ToastProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </ToastProvider>
+      </BrowserRouter>
+    </GoogleOAuthProvider>
   </React.StrictMode>
 )

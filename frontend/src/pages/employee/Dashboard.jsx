@@ -16,9 +16,14 @@ export default function EmployeeDashboard() {
   return (
     <div>
       <div className="page-header">
-        <h1 className="text-2xl font-bold text-slate-900">
-          Hello, {profile?.full_name?.split(' ')[0] || 'Employee'} 👋
-        </h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-2xl font-bold text-slate-900">
+            Hello, {profile?.full_name?.split(' ')[0] || 'Employee'} 👋
+          </h1>
+          <span className="badge bg-blue-100 text-blue-700 font-bold border border-blue-200 flex items-center gap-1 shadow-sm">
+            <Briefcase size={12} /> {profile?.company_name || 'TechCorp'}
+          </span>
+        </div>
         <p className="text-slate-500 text-sm mt-1">Your internal opportunity matches</p>
       </div>
 

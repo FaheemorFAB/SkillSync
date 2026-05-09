@@ -1,9 +1,10 @@
 import os
+
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
-import google.generativeai as genai
+import httpx
 from supabase import create_client, Client
 from dotenv import load_dotenv
 
@@ -27,10 +28,8 @@ supabase: Client | None = None
 if SUPABASE_URL and SUPABASE_SERVICE_KEY:
     supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 
-# ── Init Gemini ────────────────────────────────────────────────
-GEMINI_KEY = os.getenv("GEMINI_API_KEY", "")
-if GEMINI_KEY:
-    genai.configure(api_key=GEMINI_KEY)
+# ── Init Groq ──────────────────────────────────────────────────
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 
 
 # ── Pydantic Models ────────────────────────────────────────────
@@ -172,11 +171,10 @@ async def evaluate_code(req: SubmissionEval):
 
 @app.post("/api/recommendation")
 async def get_recommendation(req: RecommendationRequest):
-    """AI-powered career recommendation via Gemini."""
-    if not GEMINI_KEY:
-        return {"recommendation": f"Focus on deepening your {req.sector} expertise. With a score of {req.performance_score}/100, consider practicing system design patterns and contributing to open-source projects. (Set GEMINI_API_KEY for AI-powered recommendations)"}
+    """AI-powered career recommendation via Groq."""
+    if not GROQ_API_KEY:
+        return {"recommendation": f"Focus on deepening your {req.sector} expertise. With a score of {req.performance_score}/100, consider practicing system design patterns and contributing to open-source projects. (Set GROQ_API_KEY for AI-powered recommendations)"}
 
-    model = genai.GenerativeModel("gemini-2.5-flash")
     prompt = f"""
 Act as a Principal Engineer. A candidate has:
 - Skills: {', '.join(req.user_skills)}
@@ -186,10 +184,25 @@ Act as a Principal Engineer. A candidate has:
 Provide a 2-3 sentence highly actionable career recommendation. Be specific and direct.
 """
     try:
-        response = model.generate_content(prompt)
-        return {"recommendation": response.text}
+        async with httpx.AsyncClient(timeout=10.0) as client:
+            resp = await client.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {GROQ_API_KEY}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": "llama3-8b-8192",
+                    "messages": [{"role": "user", "content": prompt}],
+                    "temperature": 0.7
+                }
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            return {"recommendation": data["choices"][0]["message"]["content"].strip()}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"Groq error: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch recommendation")
 
 
 @app.post("/api/integrity-report")
@@ -211,10 +224,9 @@ async def integrity_report(req: IntegrityReport):
 
 @app.post("/api/future-proof-strategy")
 async def future_proof_strategy(req: FutureProofRequest):
-    """Generate a Future-Proof strategic blueprint using Gemini."""
-    if GEMINI_KEY:
+    """Generate a Future-Proof strategic blueprint using Groq."""
+    if GROQ_API_KEY:
         try:
-            model = genai.GenerativeModel("gemini-2.5-flash")
             prompt = f"""
 Act as a Principal Innovation Strategist.
 Company Sector: {req.sector}
@@ -225,10 +237,24 @@ Provide a concise, 3-point strategic blueprint for how this organization can fut
 Keep it extremely brief to save tokens (under 100 words total). Focus on actionable innovation.
 Format as bullet points.
 """
-            response = model.generate_content(prompt)
-            return {"strategy": response.text.strip()}
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                resp = await client.post(
+                    "https://api.groq.com/openai/v1/chat/completions",
+                    headers={
+                        "Authorization": f"Bearer {GROQ_API_KEY}",
+                        "Content-Type": "application/json"
+                    },
+                    json={
+                        "model": "llama3-8b-8192",
+                        "messages": [{"role": "user", "content": prompt}],
+                        "temperature": 0.7
+                    }
+                )
+                resp.raise_for_status()
+                data = resp.json()
+                return {"strategy": data["choices"][0]["message"]["content"].strip()}
         except Exception as e:
-            print(f"Gemini error: {e}")
+            print(f"Groq error: {e}")
             
     # Hardcoded fallback if API fails or exhausted
     return {

@@ -5,17 +5,19 @@ import {
   Trophy, Star, TrendingUp, Rocket, Filter, Search,
   Medal, Crown, Zap, RefreshCw, Video
 } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
+import toast from '../lib/toast.jsx'
 
 const MOCK_DATA = [
-  { id: 1, name: 'Alex Johnson', score: 985, sector: 'web_dev', challenge: 'Build a Real-Time Dashboard', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex', skills: ['React', 'TypeScript', 'WebSockets'], global_rank: 1, difficulty: 'Hard' },
-  { id: 2, name: 'Sarah Chen', score: 942, sector: 'data_ai', challenge: 'ML Model Deployment Pipeline', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah', skills: ['Python', 'MLflow', 'Docker'], global_rank: 2, difficulty: 'Medium' },
-  { id: 3, name: 'Mike Peters', score: 890, sector: 'cloud_devops', challenge: 'Kubernetes Security Hardening', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike', skills: ['Kubernetes', 'Docker', 'Security'], global_rank: 3, difficulty: 'Hard' },
-  { id: 4, name: 'Elena Rodriguez', score: 855, sector: 'cybersecurity', challenge: 'Penetration Testing Challenge', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Elena', skills: ['Kali Linux', 'Python', 'OWASP'], global_rank: 4, difficulty: 'Hard' },
-  { id: 5, name: 'James Liu', score: 823, sector: 'web_dev', challenge: 'FastAPI Microservice Architecture', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=James', skills: ['FastAPI', 'PostgreSQL', 'Redis'], global_rank: 5, difficulty: 'Hard' },
-  { id: 6, name: 'Priya Sharma', score: 790, sector: 'data_ai', challenge: 'ML Model Deployment Pipeline', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Priya', skills: ['TensorFlow', 'Python', 'MLOps'], global_rank: 6, difficulty: 'Medium' },
-  { id: 7, name: 'Omar Hassan', score: 756, sector: 'cloud_devops', challenge: 'Kubernetes Security Hardening', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Omar', skills: ['AWS', 'Terraform', 'Helm'], global_rank: 7, difficulty: 'Hard' },
-  { id: 8, name: 'Yuki Tanaka', score: 720, sector: 'web_dev', challenge: 'Build a Real-Time Dashboard', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Yuki', skills: ['Vue.js', 'Node.js', 'MongoDB'], global_rank: 8, difficulty: 'Hard' },
-]
+  { id: 1, name: 'Alex Johnson', score: 940, experience_years: 4, sector: 'web_dev', challenge: 'Build a Real-Time Dashboard', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex', skills: ['React', 'TypeScript', 'WebSockets'], difficulty: 'Hard' },
+  { id: 2, name: 'Sarah Chen', score: 920, experience_years: 3, sector: 'data_ai', challenge: 'ML Model Deployment Pipeline', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah', skills: ['Python', 'MLflow', 'Docker'], difficulty: 'Medium' },
+  { id: 3, name: 'Mike Peters', score: 870, experience_years: 5, sector: 'cloud_devops', challenge: 'Kubernetes Security Hardening', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike', skills: ['Kubernetes', 'Docker', 'Security'], difficulty: 'Hard' },
+  { id: 4, name: 'Elena Rodriguez', score: 840, experience_years: 2, sector: 'cybersecurity', challenge: 'Penetration Testing Challenge', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Elena', skills: ['Kali Linux', 'Python', 'OWASP'], difficulty: 'Hard' },
+  { id: 5, name: 'James Liu', score: 810, experience_years: 3, sector: 'web_dev', challenge: 'FastAPI Microservice Architecture', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=James', skills: ['FastAPI', 'PostgreSQL', 'Redis'], difficulty: 'Hard' },
+  { id: 6, name: 'Priya Sharma', score: 790, experience_years: 1, sector: 'data_ai', challenge: 'ML Model Deployment Pipeline', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Priya', skills: ['TensorFlow', 'Python', 'MLOps'], difficulty: 'Medium' },
+  { id: 7, name: 'Omar Hassan', score: 756, experience_years: 2, sector: 'cloud_devops', challenge: 'Kubernetes Security Hardening', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Omar', skills: ['AWS', 'Terraform', 'Helm'], difficulty: 'Hard' },
+  { id: 8, name: 'Yuki Tanaka', score: 720, experience_years: 1, sector: 'web_dev', challenge: 'Build a Real-Time Dashboard', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Yuki', skills: ['Vue.js', 'Node.js', 'MongoDB'], difficulty: 'Hard' },
+].map(e => ({ ...e, total_adjusted: e.score + (e.experience_years * 10) })).sort((a, b) => b.total_adjusted - a.total_adjusted).map((e, index) => ({ ...e, global_rank: index + 1 }))
 
 const SECTOR_LABELS = {
   web_dev: 'Web Dev',
@@ -61,6 +63,7 @@ function RankBadge({ rank }) {
 }
 
 export default function LeaderboardPage() {
+  const { profile } = useAuth()
   const [entries, setEntries] = useState(MOCK_DATA)
   const [filter, setFilter] = useState('all')
   const [search, setSearch] = useState('')
@@ -107,8 +110,19 @@ export default function LeaderboardPage() {
             <span className="font-bold text-lg text-slate-900">SkillSync</span>
           </Link>
           <div className="flex items-center gap-3">
-            <Link to="/login" className="btn btn-secondary btn-sm">Sign In</Link>
-            <Link to="/signup" className="btn btn-primary btn-sm">Join Free</Link>
+            {profile ? (
+              <Link 
+                to={profile.role === 'company' ? '/company/dashboard' : profile.role === 'employee' ? '/employee/dashboard' : '/app/dashboard'} 
+                className="btn btn-primary btn-sm"
+              >
+                Go to Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link to="/login" className="btn btn-secondary btn-sm">Sign In</Link>
+                <Link to="/signup" className="btn btn-primary btn-sm">Join Free</Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
@@ -244,19 +258,25 @@ export default function LeaderboardPage() {
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
                   }}>
-                    {entry.score}
+                    {entry.total_adjusted}
                   </div>
                   <div className="flex items-center justify-end gap-1 text-xs text-slate-500 mt-0.5">
                     <Star size={10} className="text-amber-500" />
-                    points
+                    points ({entry.score} base + {entry.experience_years * 10} exp)
                   </div>
                 </div>
 
-                {entry.global_rank <= 3 && (
-                  <button className="btn btn-secondary btn-sm hidden md:flex gap-2">
-                    <Video size={13} />
-                    Interview
-                  </button>
+                {entry.global_rank <= 3 && profile?.role === 'company' && (
+                  <div className="relative group hidden md:block">
+                    <button className="btn btn-secondary btn-sm flex gap-2">
+                      <Video size={13} />
+                      Interview
+                    </button>
+                    <div className="absolute right-0 top-full mt-1 w-36 bg-white border border-slate-200 shadow-xl rounded-lg overflow-hidden hidden group-hover:block z-10">
+                      <button className="w-full text-left px-4 py-2 text-sm hover:bg-slate-50 border-b border-slate-100" onClick={() => toast.success(`Interview Now notification sent to ${entry.name}`)}>Interview Now</button>
+                      <button className="w-full text-left px-4 py-2 text-sm hover:bg-slate-50" onClick={() => toast.success(`Schedule interview request sent to ${entry.name}`)}>Schedule</button>
+                    </div>
+                  </div>
                 )}
               </div>
             ))}

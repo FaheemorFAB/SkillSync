@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 import { GitBranch, Users, Zap, CheckCircle, Star, Video } from 'lucide-react'
+import toast from '../../lib/toast.jsx'
 
 const MOCK_EMPLOYEES = [
   { id: '1', name: 'Sarah Chen', skills: ['React', 'TypeScript', 'WebSockets', 'CSS'], avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah', role: 'employee', bio: 'Frontend Lead' },
@@ -103,10 +104,10 @@ export default function InternalMatchPage() {
 
               {emp.matchScore >= 60 && (
                 <div className="flex flex-col gap-2 flex-shrink-0">
-                  <button className="btn btn-success btn-sm gap-2">
+                  <button className="btn btn-success btn-sm gap-2" onClick={() => toast.success(`Nominated ${emp.name} for ${challenge.title}`)}>
                     <Zap size={12} /> Nominate
                   </button>
-                  <button className="btn btn-secondary btn-sm gap-2">
+                  <button className="btn btn-secondary btn-sm gap-2" onClick={() => toast.success(`Interview scheduled for ${emp.name}`)}>
                     <Video size={12} /> Interview
                   </button>
                 </div>

@@ -4,6 +4,7 @@ import {
   Rocket, Trophy, Shield, Zap, Users, Code2, Database, Cloud,
   Brain, ChevronRight, Star, CheckCircle, TrendingUp, ArrowRight, Lock, Video, Lightbulb
 } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
 
 const SECTORS = [
   { icon: Code2, name: 'Web Development', color: '#2563EB', desc: 'Frontend, Backend & Fullstack' },
@@ -48,6 +49,8 @@ const STATS = [
 ]
 
 export default function LandingPage() {
+  const { profile } = useAuth()
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       {/* === NAVBAR === */}
@@ -67,10 +70,21 @@ export default function LandingPage() {
           </div>
 
           <div className="flex items-center gap-3">
-            <Link to="/login" className="btn btn-secondary btn-sm">Sign In</Link>
-            <Link to="/signup" className="btn btn-primary btn-sm shadow-md">
-              Get Started <ArrowRight size={14} />
-            </Link>
+            {profile ? (
+              <Link 
+                to={profile.role === 'company' ? '/company/dashboard' : profile.role === 'employee' ? '/employee/dashboard' : '/app/dashboard'} 
+                className="btn btn-primary btn-sm shadow-md"
+              >
+                Go to Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link to="/login" className="btn btn-secondary btn-sm">Sign In</Link>
+                <Link to="/signup" className="btn btn-primary btn-sm shadow-md">
+                  Get Started <ArrowRight size={14} />
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </nav>

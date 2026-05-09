@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   website_url TEXT,
   linkedin_url TEXT,
   github_url TEXT,
+  experience_years INTEGER DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );

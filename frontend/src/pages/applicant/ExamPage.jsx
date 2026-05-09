@@ -60,7 +60,12 @@ function useAntiCheat(onViolation) {
     }
   }, [addEvent])
 
-  return { warnings, events }
+  const reset = useCallback(() => {
+    setWarnings(0)
+    setEvents([])
+  }, [])
+
+  return { warnings, events, reset }
 }
 
 // ─── Round 1: Aptitude MCQ ──────────────────────────────────────
@@ -81,7 +86,7 @@ function Round1({ questions, onComplete }) {
       setSubmitted(true)
       const score = questions.reduce((acc, q) => acc + (answers[q.id] === q.correct ? 1 : 0), 0)
       const pct = Math.round((score / questions.length) * 100)
-      setTimeout(() => onComplete(pct * 3, answers), 1200)
+      setTimeout(() => onComplete(pct, answers), 1200)
     }
   }
 
@@ -142,6 +147,7 @@ function Round1({ questions, onComplete }) {
 
 // ─── Round 2: Code Editor ───────────────────────────────────────
 function Round2({ problem, starterCode, onComplete }) {
+  const [language, setLanguage] = useState('javascript')
   const [code, setCode] = useState(starterCode || '// Your solution here')
   const [submitting, setSubmitting] = useState(false)
   const [output, setOutput] = useState(null)
@@ -150,13 +156,17 @@ function Round2({ problem, starterCode, onComplete }) {
     setSubmitting(true)
     try {
       // Call Piston API for code execution
+      const testInjection = language === 'python' 
+        ? '\nprint(twoSum([2,7,11,15], 9))' 
+        : '\nconsole.log(JSON.stringify(twoSum([2,7,11,15], 9)))'
+
       const res = await fetch('https://emkc.org/api/v2/piston/execute', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          language: 'javascript',
+          language: language,
           version: '*',
-          files: [{ content: code + '\nconsole.log(JSON.stringify(twoSum([2,7,11,15], 9)))' }],
+          files: [{ content: code + testInjection }],
         }),
       })
       const data = await res.json()
@@ -164,7 +174,11 @@ function Round2({ problem, starterCode, onComplete }) {
       setOutput(stdout)
 
       // Score based on output
-      const score = stdout === '[0,1]' ? 100 : stdout.includes('0') ? 60 : 30
+      let isCorrect = false
+      if (language === 'python') isCorrect = stdout === '[0, 1]' || stdout === '(0, 1)' || stdout.includes('0') && stdout.includes('1')
+      else isCorrect = stdout === '[0,1]'
+
+      const score = isCorrect ? 100 : stdout.includes('0') ? 60 : 30
       setTimeout(() => onComplete(score, code), 800)
     } catch {
       // Fallback scoring
@@ -192,26 +206,39 @@ function Round2({ problem, starterCode, onComplete }) {
         <div className="md:w-3/5 flex flex-col gap-3">
           {/* Mac-style chrome */}
           <div className="flex-1 flex flex-col rounded-xl overflow-hidden border border-slate-200">
-            <div className="px-4 py-2 flex gap-2 items-center" style={{ background: '#1e293b' }}>
-              <div className="w-3 h-3 rounded-full bg-red-500" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500" />
-              <div className="w-3 h-3 rounded-full bg-green-500" />
-              <span className="text-xs text-slate-400 ml-2">solution.js</span>
+            <div className="px-4 py-2 flex items-center justify-between" style={{ background: '#1e293b' }}>
+              <div className="flex gap-2 items-center">
+                <div className="w-3 h-3 rounded-full bg-red-500" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                <div className="w-3 h-3 rounded-full bg-green-500" />
+              </div>
+              <select 
+                className="bg-slate-800 text-xs text-slate-300 border-none outline-none rounded px-2 py-1"
+                value={language}
+                onChange={(e) => {
+                  setLanguage(e.target.value)
+                  if (e.target.value === 'python') setCode('def twoSum(nums, target):\n    # Your solution here\n    pass')
+                  else setCode('function twoSum(nums, target) {\n  // Your solution here\n}')
+                }}
+              >
+                <option value="javascript">JavaScript</option>
+                <option value="python">Python</option>
+              </select>
             </div>
             <textarea
               id="code-editor"
               value={code}
               onChange={e => setCode(e.target.value)}
               className="code-editor flex-1 rounded-none border-none"
-              style={{ minHeight: '280px', background: '#0D1117' }}
+              style={{ minHeight: '280px', background: '#0D1117', color: '#10B981' }}
               spellCheck={false}
             />
           </div>
 
           {output && (
             <div className="p-3 rounded-xl text-xs font-mono"
-              style={{ background: '#ECFDF5', border: '1px solid #A7F3D0', color: '#059669' }}>
-              Output: {output}
+              style={{ background: '#0A0F1E', border: '1px solid #1e293b', color: '#10B981' }}>
+              $ {output}
             </div>
           )}
 
@@ -305,9 +332,17 @@ export default function ExamPage() {
   const [timeLeft, setTimeLeft] = useState(null)
   const [submissionId, setSubmissionId] = useState(null)
 
-  const { warnings, events } = useAntiCheat((count, ev) => {
-    if (count >= 3) toast.error('⚠️ 3+ violations detected — submission flagged')
-    else toast(`🛡️ Integrity violation: ${ev.detail}`, { icon: '⚠️' })
+  const { warnings, events, reset } = useAntiCheat((count, ev) => {
+    if (ev.type === 'tab_switch') {
+      toast.error('⚠️ Tab switch detected! Test has been restarted.')
+      setPhase('briefing')
+      setRound(1)
+      setScores({ r1: 0, r2: 0, r3: 0 })
+      reset()
+    } else {
+      if (count >= 3) toast.error('⚠️ 3+ violations detected — submission flagged')
+      else toast(`🛡️ Integrity violation: ${ev.detail}`, { icon: '⚠️' })
+    }
   })
 
   // Load challenge
@@ -343,6 +378,14 @@ export default function ExamPage() {
   const enterFullscreen = () => containerRef.current?.requestFullscreen?.()
 
   const startExam = async () => {
+    try {
+      await navigator.mediaDevices.getUserMedia({ video: true })
+      toast.success("Camera access verified")
+    } catch (e) {
+      toast.error("Camera access is required to maintain exam integrity.")
+      return
+    }
+
     // Create submission record
     if (user) {
       const { data } = await supabase.from('submissions').insert({
@@ -376,10 +419,12 @@ export default function ExamPage() {
 
   const handleRound3Complete = async (score, response) => {
     setScores(s => ({ ...s, r3: score }))
-    const total = scores.r1 + scores.r2 + score
+    const penalty = warnings * 10
+    const finalR3Score = Math.max(0, score - penalty) // Apply penalty to R3 so total drops
+    
     if (submissionId) {
       await supabase.from('submissions').update({
-        round3_score: score,
+        round3_score: finalR3Score,
         round3_response: response,
         status: warnings >= 3 ? 'disqualified' : 'completed',
         integrity_warnings: warnings,

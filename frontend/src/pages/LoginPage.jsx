@@ -1,26 +1,24 @@
 import React, { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { Rocket, Eye, EyeOff, AlertCircle } from 'lucide-react'
+import { Rocket, AlertCircle } from 'lucide-react'
 import toast from '../lib/toast.jsx'
+import { GoogleLogin } from '@react-oauth/google'
 
 export default function LoginPage() {
-  const { signIn } = useAuth()
+  const { signInWithGoogle } = useAuth()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const redirectTo = searchParams.get('redirect')
 
-  const [form, setForm] = useState({ email: '', password: '' })
   const [loading, setLoading] = useState(false)
-  const [showPass, setShowPass] = useState(false)
   const [error, setError] = useState('')
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleGoogleSuccess = async (credentialResponse) => {
     setError('')
     setLoading(true)
 
-    const { data, error } = await signIn(form)
+    const { data, error } = await signInWithGoogle(credentialResponse.credential)
 
     if (error) {
       setError(error.message)
@@ -30,6 +28,10 @@ export default function LoginPage() {
 
     toast.success('Welcome back!')
     // Navigation handled by App.jsx route guard
+  }
+
+  const handleGoogleError = () => {
+    setError('Google authentication failed.')
   }
 
   return (
@@ -58,58 +60,25 @@ export default function LoginPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="form-group">
-              <label className="input-label">Email address</label>
-              <input
-                id="login-email"
-                type="email"
-                className="input"
-                placeholder="you@company.com"
-                value={form.email}
-                onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))}
-                required
-                autoComplete="email"
+          <div className="flex justify-center mt-6">
+            {loading ? (
+              <span className="flex items-center gap-2 text-slate-500 font-medium">
+                <span className="w-4 h-4 border-2 border-blue-600/30 border-t-blue-600 rounded-full animate-spin" />
+                Signing in...
+              </span>
+            ) : (
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+                useOneTap
+                theme="filled_blue"
+                shape="rectangular"
+                text="signin_with"
+                size="large"
+                width="100%"
               />
-            </div>
-
-            <div className="form-group">
-              <label className="input-label">Password</label>
-              <div className="relative">
-                <input
-                  id="login-password"
-                  type={showPass ? 'text' : 'password'}
-                  className="input pr-10"
-                  placeholder="••••••••"
-                  value={form.password}
-                  onChange={(e) => setForm(f => ({ ...f, password: e.target.value }))}
-                  required
-                  autoComplete="current-password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors"
-                >
-                  {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
-                </button>
-              </div>
-            </div>
-
-            <button
-              id="login-submit"
-              type="submit"
-              className="btn btn-primary w-full btn-lg"
-              disabled={loading}
-            >
-              {loading ? (
-                <span className="flex items-center gap-2">
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Signing in...
-                </span>
-              ) : 'Sign In'}
-            </button>
-          </form>
+            )}
+          </div>
 
           {/* Demo accounts */}
           <div className="mt-6 p-4 rounded-lg bg-slate-50 border border-slate-200">

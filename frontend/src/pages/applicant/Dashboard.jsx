@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import { supabase } from '../../lib/supabase'
 import {
   Briefcase, Trophy, Target, TrendingUp, Clock, CheckCircle,
-  Zap, ArrowRight, Star, Code2, Brain, Cloud, Shield, Database, Flame
+  Zap, ArrowRight, Star, Code2, Brain, Cloud, Shield, Database, Flame, Video
 } from 'lucide-react'
 
 const SECTOR_COLORS = {
@@ -93,6 +93,11 @@ export default function ApplicantDashboard() {
 
   const completedCount = displaySubmissions.filter(s => s.status === 'completed').length
   const inProgressCount = displaySubmissions.filter(s => s.status === 'in_progress').length
+
+  const mockInterviews = [
+    { id: 1, company: 'TechNova', role: 'Full Stack Engineer', type: 'Interview Now', status: 'pending', date: 'Today' },
+    { id: 2, company: 'DataSphere', role: 'ML Engineer', type: 'Scheduled', status: 'upcoming', date: 'Tomorrow, 10:00 AM' }
+  ]
 
   return (
     <div>
@@ -218,6 +223,36 @@ export default function ApplicantDashboard() {
                 </Link>
               </div>
             )}
+          </div>
+        </section>
+
+        {/* Interviews & Jobs */}
+        <section className="mt-8 mb-4">
+          <h2 className="text-lg font-bold text-slate-900 mb-5 flex items-center gap-2">
+            <Video size={18} style={{ color: '#06B6D4' }} />
+            Interview Invites & Jobs
+          </h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            {mockInterviews.map((inv) => (
+              <div key={inv.id} className="card p-5 border-blue-100 bg-blue-50/30 hover:border-blue-300 transition-colors">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h3 className="font-bold text-slate-900">{inv.company}</h3>
+                    <p className="text-sm text-slate-600">{inv.role}</p>
+                  </div>
+                  <span className={`text-xs px-2 py-1 rounded-full font-semibold ${inv.type === 'Interview Now' ? 'bg-red-100 text-red-700 animate-pulse' : 'bg-blue-100 text-blue-700'}`}>
+                    {inv.type}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-200/60">
+                  <span className="text-xs font-medium text-slate-500">{inv.date}</span>
+                  <button className="btn btn-primary btn-sm shadow-sm gap-1.5">
+                    <Video size={13} />
+                    Join Room
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 

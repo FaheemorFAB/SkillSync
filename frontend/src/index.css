@@ -2,7 +2,7 @@
 
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
+/* tailwind utilities moved to bottom */
 
 /* ===========================
    CSS DESIGN SYSTEM TOKENS (ENTERPRISE)
@@ -738,3 +738,5 @@ textarea.input {
   background: #FEF2F2;
   color: #B91C1C;
 }
+
+@tailwind utilities;

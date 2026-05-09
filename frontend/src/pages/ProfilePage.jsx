@@ -16,6 +16,7 @@ export default function ProfilePage() {
     skills: profile?.skills || [],
     sector: profile?.sector || '',
     company_name: profile?.company_name || '',
+    experience_years: profile?.experience_years || 0,
   })
   const [skillInput, setSkillInput] = useState('')
   const [saving, setSaving] = useState(false)
@@ -108,6 +109,21 @@ export default function ProfilePage() {
               </div>
             ))}
           </div>
+
+          {(profile?.role === 'applicant' || profile?.role === 'employee') && (
+            <div className="form-group">
+              <label className="input-label">Years of Experience</label>
+              <input 
+                id="p-experience" 
+                type="number" 
+                min="0" 
+                max="50" 
+                className="input" 
+                value={form.experience_years} 
+                onChange={e => setForm(f => ({ ...f, experience_years: parseInt(e.target.value) || 0 }))} 
+              />
+            </div>
+          )}
         </section>
 
         {/* Skills (applicant + employee) */}

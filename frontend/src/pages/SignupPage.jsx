@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import {
-  Rocket, Eye, EyeOff, AlertCircle, User, Building2,
-  Users, CheckCircle, ChevronRight, Code2, Brain, Cloud, Shield, Database
+  Rocket, AlertCircle, User, Building2,
+  Users, CheckCircle
 } from 'lucide-react'
 import toast from '../lib/toast.jsx'
+import { GoogleLogin } from '@react-oauth/google'
 
 const ROLES = [
   {
@@ -38,57 +39,28 @@ const SKILLS_LIST = [
 ]
 
 export default function SignupPage() {
-  const { signUp } = useAuth()
-  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-
-  const [step, setStep] = useState(1)
+  const { signInWithGoogle } = useAuth()
   const [role, setRole] = useState(searchParams.get('role') || 'applicant')
-  const [form, setForm] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    companyName: '',
-    bio: '',
-    skills: [],
-    sector: '',
-  })
+  const [companyName, setCompanyName] = useState('')
   const [loading, setLoading] = useState(false)
-  const [showPass, setShowPass] = useState(false)
   const [error, setError] = useState('')
 
-  const toggleSkill = (skill) => {
-    setForm(f => ({
-      ...f,
-      skills: f.skills.includes(skill)
-        ? f.skills.filter(s => s !== skill)
-        : [...f.skills, skill]
-    }))
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleGoogleSuccess = async (credentialResponse) => {
     setError('')
-
-    if (form.password !== form.confirmPassword) {
-      setError('Passwords do not match')
-      return
-    }
-    if (form.password.length < 6) {
-      setError('Password must be at least 6 characters')
+    
+    if (role === 'company' && !companyName.trim()) {
+      setError('Please enter your company name')
       return
     }
 
     setLoading(true)
 
-    const { data, error } = await signUp({
-      email: form.email,
-      password: form.password,
-      fullName: form.fullName,
-      role,
-      companyName: form.companyName,
-    })
+    const { data, error } = await signInWithGoogle(
+      credentialResponse.credential, 
+      role, 
+      role === 'company' ? companyName : null
+    )
 
     if (error) {
       setError(error.message)
@@ -96,8 +68,12 @@ export default function SignupPage() {
       return
     }
 
-    toast.success('Account created! Please check your email to confirm.')
-    navigate('/login')
+    toast.success('Account created successfully!')
+    // App.jsx will automatically redirect
+  }
+
+  const handleGoogleError = () => {
+    setError('Google authentication failed.')
   }
 
   return (
@@ -116,23 +92,6 @@ export default function SignupPage() {
           <p className="text-slate-500 text-sm">Join the skills-based hiring revolution</p>
         </div>
 
-        {/* Step progress */}
-        <div className="flex items-center gap-2 mb-8">
-          {[1, 2].map((s) => (
-            <React.Fragment key={s}>
-              <div className={`flex items-center gap-2 ${s <= step ? 'text-blue-600' : 'text-slate-500'}`}>
-                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold
-                  ${s < step ? 'bg-blue-600 text-white' : s === step ? 'border-2 border-blue-600 text-blue-600' : 'border-2 border-slate-300 text-slate-500'}`}>
-                  {s < step ? <CheckCircle size={14} /> : s}
-                </div>
-                <span className="text-xs font-medium hidden sm:block">
-                  {s === 1 ? 'Account Details' : 'Your Profile'}
-                </span>
-              </div>
-              {s < 2 && <div className={`flex-1 h-px ${step > 1 ? 'bg-blue-600' : 'bg-slate-200'}`} />}
-            </React.Fragment>
-          ))}
-        </div>
 
         <div className="card p-8">
           {error && (
@@ -143,8 +102,6 @@ export default function SignupPage() {
             </div>
           )}
 
-          {/* STEP 1 */}
-          {step === 1 && (
             <div className="animate-fade-in">
               {/* Role Selection */}
               <div className="form-group">
@@ -178,19 +135,6 @@ export default function SignupPage() {
                 </div>
               </div>
 
-              <div className="form-group">
-                <label className="input-label">Full Name</label>
-                <input
-                  id="signup-fullname"
-                  type="text"
-                  className="input"
-                  placeholder="Alex Johnson"
-                  value={form.fullName}
-                  onChange={(e) => setForm(f => ({ ...f, fullName: e.target.value }))}
-                  required
-                />
-              </div>
-
               {role === 'company' && (
                 <div className="form-group">
                   <label className="input-label">Company Name</label>
@@ -199,142 +143,36 @@ export default function SignupPage() {
                     type="text"
                     className="input"
                     placeholder="Acme Corp"
-                    value={form.companyName}
-                    onChange={(e) => setForm(f => ({ ...f, companyName: e.target.value }))}
+                    value={companyName}
+                    onChange={(e) => setCompanyName(e.target.value)}
                   />
                 </div>
               )}
 
-              <div className="form-group">
-                <label className="input-label">Email Address</label>
-                <input
-                  id="signup-email"
-                  type="email"
-                  className="input"
-                  placeholder="you@example.com"
-                  value={form.email}
-                  onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))}
-                  required
-                />
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label className="input-label">Password</label>
-                  <div className="relative">
-                    <input
-                      id="signup-password"
-                      type={showPass ? 'text' : 'password'}
-                      className="input pr-10"
-                      placeholder="Min 6 chars"
-                      value={form.password}
-                      onChange={(e) => setForm(f => ({ ...f, password: e.target.value }))}
-                      required
-                    />
-                    <button type="button" onClick={() => setShowPass(!showPass)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500">
-                      {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
-                    </button>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label className="input-label">Confirm Password</label>
-                  <input
-                    id="signup-confirm"
-                    type="password"
-                    className="input"
-                    placeholder="Repeat password"
-                    value={form.confirmPassword}
-                    onChange={(e) => setForm(f => ({ ...f, confirmPassword: e.target.value }))}
-                    required
-                  />
-                </div>
-              </div>
-
-              <button
-                type="button"
-                id="signup-next"
-                className="btn btn-primary w-full btn-lg"
-                onClick={() => {
-                  if (!form.fullName || !form.email || !form.password) {
-                    setError('Please fill all required fields')
-                    return
-                  }
-                  setError('')
-                  setStep(2)
-                }}
-              >
-                Continue <ChevronRight size={16} />
-              </button>
-            </div>
-          )}
-
-          {/* STEP 2 */}
-          {step === 2 && (
-            <form onSubmit={handleSubmit} className="animate-fade-in">
-              <div className="form-group">
-                <label className="input-label">Bio (optional)</label>
-                <textarea
-                  id="signup-bio"
-                  className="input"
-                  placeholder="Tell us about yourself..."
-                  value={form.bio}
-                  onChange={(e) => setForm(f => ({ ...f, bio: e.target.value }))}
-                  rows={3}
-                />
-              </div>
-
-              {(role === 'applicant' || role === 'employee') && (
-                <div className="form-group">
-                  <label className="input-label">Select Your Skills (choose all that apply)</label>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {SKILLS_LIST.map((skill) => (
-                      <button
-                        key={skill}
-                        type="button"
-                        onClick={() => toggleSkill(skill)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${
-                          form.skills.includes(skill)
-                            ? 'border-blue-600 bg-blue-50 text-blue-700'
-                            : 'border-slate-200 text-slate-600 hover:border-blue-300 hover:text-slate-900'
-                        }`}
-                      >
-                        {skill}
-                      </button>
-                    ))}
-                  </div>
-                  {form.skills.length > 0 && (
-                    <p className="text-xs text-blue-600 mt-2">{form.skills.length} skill(s) selected</p>
-                  )}
-                </div>
-              )}
-
-              <div className="flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => setStep(1)}
-                  className="btn btn-secondary flex-1"
-                >
-                  Back
-                </button>
-                <button
-                  id="signup-submit"
-                  type="submit"
-                  className="btn btn-primary flex-1 btn-lg"
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <span className="flex items-center gap-2">
-                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Creating...
+              <div className="mt-8">
+                {loading ? (
+                  <div className="flex justify-center p-4">
+                    <span className="flex items-center gap-2 text-slate-500 font-medium">
+                      <span className="w-4 h-4 border-2 border-blue-600/30 border-t-blue-600 rounded-full animate-spin" />
+                      Creating account...
                     </span>
-                  ) : (
-                    <><Rocket size={16} /> Create Account</>
-                  )}
-                </button>
+                  </div>
+                ) : (
+                  <div className="flex justify-center">
+                    <GoogleLogin
+                      onSuccess={handleGoogleSuccess}
+                      onError={handleGoogleError}
+                      useOneTap={false}
+                      theme="filled_blue"
+                      shape="rectangular"
+                      text="signup_with"
+                      size="large"
+                      width="100%"
+                    />
+                  </div>
+                )}
               </div>
-            </form>
-          )}
+            </div>
         </div>
 
         <p className="text-center text-sm text-slate-500 mt-6">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import toast from '../lib/toast.js'
+import toast from '../lib/toast.jsx'
 import { User, Camera, Save, Plus, X, Loader2, Github, Linkedin, Globe } from 'lucide-react'
 
 const SKILLS_LIST = ['React', 'TypeScript', 'Python', 'FastAPI', 'Node.js', 'PostgreSQL', 'Docker', 'Kubernetes', 'AWS', 'Machine Learning', 'Flutter', 'Swift', 'Cybersecurity', 'Rust', 'Go', 'Redis', 'MongoDB', 'GraphQL', 'Vue.js', 'Next.js', 'TensorFlow', 'PyTorch']

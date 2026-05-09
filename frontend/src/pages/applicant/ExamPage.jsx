@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { supabase } from '../../lib/supabase'
-import toast from '../../lib/toast.js'
+import toast from '../../lib/toast.jsx'
 import {
   ShieldAlert, Maximize, AlertTriangle, Send, CheckCircle,
   Clock, ChevronRight, Code2, Brain, Rocket, X, Eye

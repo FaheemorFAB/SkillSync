@@ -5,7 +5,7 @@ import {
   Rocket, Eye, EyeOff, AlertCircle, User, Building2,
   Users, CheckCircle, ChevronRight, Code2, Brain, Cloud, Shield, Database
 } from 'lucide-react'
-import toast from '../lib/toast.js'
+import toast from '../lib/toast.jsx'
 
 const ROLES = [
   {

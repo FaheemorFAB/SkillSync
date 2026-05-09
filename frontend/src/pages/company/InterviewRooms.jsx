@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Video, Plus, Copy, ExternalLink, Clock, User, CheckCircle, X } from 'lucide-react'
-import toast from '../../lib/toast.js'
+import toast from '../../lib/toast.jsx'
 
 const MOCK_ROOMS = [
   { id: '1', candidate: 'Alex Johnson', challenge: 'Real-Time Dashboard', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex', score: 985, status: 'scheduled', scheduled_at: '2026-05-10T14:00:00', room_name: 'skillsync-room-alex-1715' },

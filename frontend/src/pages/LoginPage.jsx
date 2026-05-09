@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { Rocket, Eye, EyeOff, AlertCircle } from 'lucide-react'
-import toast from '../lib/toast.js'
+import toast from '../lib/toast.jsx'
 
 export default function LoginPage() {
   const { signIn } = useAuth()

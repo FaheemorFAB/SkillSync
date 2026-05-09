@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { supabase } from '../../lib/supabase'
-import toast from '../../lib/toast.js'
+import toast from '../../lib/toast.jsx'
 import { Rocket, Sparkles, Code2, Brain, Cloud, Shield, Database, Plus, X, Loader2 } from 'lucide-react'
 
 const SECTORS = [

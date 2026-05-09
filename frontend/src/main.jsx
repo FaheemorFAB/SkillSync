@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import { AuthProvider } from './contexts/AuthContext.jsx'
-import { ToastProvider, _registerToast } from './lib/toast.js'
-import toast from './lib/toast.js'
+import { ToastProvider, _registerToast } from './lib/toast.jsx'
+import toast from './lib/toast.jsx'
 import './index.css'
 
 // Register the global toast function

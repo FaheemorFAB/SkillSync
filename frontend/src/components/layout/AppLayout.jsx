@@ -6,7 +6,7 @@ import {
   LogOut, Menu, X, Rocket, Plus, Target, Shield, ChevronRight,
   Bell, Search, UserCircle, Zap, BarChart3, GitBranch
 } from 'lucide-react'
-import toast from '../../lib/toast.js'
+import toast from '../../lib/toast.jsx'
 
 const navConfig = {
   applicant: [

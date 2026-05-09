@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { supabase } from '../../lib/supabase'
 import { Plus, Edit2, Trash2, Users, BarChart2, Zap, Eye } from 'lucide-react'
-import toast from '../../lib/toast.js'
+import toast from '../../lib/toast.jsx'
 
 const MOCK = [
   { id: '1', title: 'Build a Real-Time Dashboard', sector: 'web_dev', difficulty: 'Hard', applicant_count: 142, is_active: true },

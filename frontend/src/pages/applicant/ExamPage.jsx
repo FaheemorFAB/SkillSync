@@ -16,11 +16,11 @@ const MOCK_CHALLENGE = {
   difficulty: 'Hard',
   time_limit_mins: 75,
   round1_questions: [
-    { id: 1, question: 'What is the time complexity of binary search?', options: ['O(n)', 'O(log n)', 'O(n²)', 'O(1)'], correct: 1 },
-    { id: 2, question: 'Which CSS property creates a new stacking context?', options: ['display', 'position', 'z-index', 'transform'], correct: 3 },
-    { id: 3, question: 'In React, what hook is used for side effects?', options: ['useState', 'useCallback', 'useEffect', 'useMemo'], correct: 2 },
-    { id: 4, question: 'REST stands for?', options: ['Remote Execution Standard Technology', 'Representational State Transfer', 'Resource Endpoint Structure Template', 'Reactive Event Streaming Technology'], correct: 1 },
-    { id: 5, question: 'Which HTTP method is both idempotent and safe?', options: ['POST', 'PUT', 'DELETE', 'GET'], correct: 3 },
+    { id: 1, question: "Pointing to a photograph, a man said, 'I have no brother, and that man's father is my father's son.' Whose photograph was it?", options: ["His son", "His own", "His father", "His nephew"], correct: 0 },
+    { id: 2, question: "A is the mother of B and C. If D is the husband of C, what is A to D?", options: ["Mother", "Sister", "Aunt", "Mother-in-law"], correct: 3 },
+    { id: 3, question: "If 'A + B' means A is the brother of B; 'A x B' means A is the father of B. Which of the following means C is the son of M?", options: ["M x N + C", "F x C + N", "N + M x C", "M x C + N"], correct: 3 },
+    { id: 4, question: "Look at this series: 2, 1, (1/2), (1/4)... What number should come next?", options: ["(1/3)", "(1/8)", "(2/8)", "(1/16)"], correct: 1 },
+    { id: 5, question: "SCD, TEF, UGH, ____, WKL", options: ["CMN", "UJI", "VIJ", "IJT"], correct: 2 },
   ],
   round2_problem: 'Given an array of integers, return indices of the two numbers that add up to a target. Each input has exactly one solution.',
   round2_starter_code: 'function twoSum(nums, target) {\n  // Your solution here\n  \n}',
@@ -174,6 +174,12 @@ function Round2({ problem, starterCode, onComplete }) {
       setOutput(stdout)
 
       // Score based on output
+      if (code.trim() === starterCode.trim()) {
+        setOutput('Code is unmodified from starter template. Score: 0')
+        setTimeout(() => onComplete(0, code), 800)
+        return
+      }
+
       let isCorrect = false
       if (language === 'python') isCorrect = stdout === '[0, 1]' || stdout === '(0, 1)' || stdout.includes('0') && stdout.includes('1')
       else isCorrect = stdout === '[0,1]'
@@ -182,7 +188,12 @@ function Round2({ problem, starterCode, onComplete }) {
       setTimeout(() => onComplete(score, code), 800)
     } catch {
       // Fallback scoring
-      const score = code.includes('Map') || code.includes('{}') ? 80 : 50
+      let score = 0
+      if (code.trim() === starterCode.trim()) {
+        score = 0
+      } else {
+        score = code.includes('Map') || code.includes('{}') ? 80 : 50
+      }
       setOutput('Execution unavailable — code evaluated locally')
       setTimeout(() => onComplete(score, code), 800)
     }
@@ -332,16 +343,20 @@ export default function ExamPage() {
   const [timeLeft, setTimeLeft] = useState(null)
   const [submissionId, setSubmissionId] = useState(null)
 
-  const { warnings, events, reset } = useAntiCheat((count, ev) => {
+  const { warnings, events, reset } = useAntiCheat(async (count, ev) => {
     if (ev.type === 'tab_switch') {
-      toast.error('⚠️ Tab switch detected! Test has been restarted.')
-      setPhase('briefing')
-      setRound(1)
-      setScores({ r1: 0, r2: 0, r3: 0 })
-      reset()
+      toast.error('⚠️ Tab switch detected! A 10-point penalty has been applied.')
     } else {
-      if (count >= 3) toast.error('⚠️ 3+ violations detected — submission flagged')
-      else toast(`🛡️ Integrity violation: ${ev.detail}`, { icon: '⚠️' })
+      toast(`🛡️ Integrity violation: ${ev.detail}`, { icon: '⚠️' })
+    }
+
+    if (count >= 3) {
+      toast.error('⚠️ Maximum violations reached. Test terminated.')
+      if (submissionId) {
+        await supabase.from('submissions').update({ status: 'disqualified', integrity_warnings: count }).eq('id', submissionId)
+      }
+      if (document.fullscreenElement) document.exitFullscreen()
+      navigate('/app/dashboard')
     }
   })
 
@@ -378,14 +393,6 @@ export default function ExamPage() {
   const enterFullscreen = () => containerRef.current?.requestFullscreen?.()
 
   const startExam = async () => {
-    try {
-      await navigator.mediaDevices.getUserMedia({ video: true })
-      toast.success("Camera access verified")
-    } catch (e) {
-      toast.error("Camera access is required to maintain exam integrity.")
-      return
-    }
-
     // Create submission record
     if (user) {
       const { data } = await supabase.from('submissions').insert({
@@ -578,11 +585,10 @@ export default function ExamPage() {
         </div>
       </header>
 
-      {/* Round content */}
       <div className="flex-1 overflow-y-auto">
         {round === 1 && (
           <Round1
-            questions={challenge.round1_questions || MOCK_CHALLENGE.round1_questions}
+            questions={challenge.round1_questions?.length ? challenge.round1_questions : MOCK_CHALLENGE.round1_questions}
             onComplete={handleRound1Complete}
           />
         )}

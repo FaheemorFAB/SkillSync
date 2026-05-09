@@ -1,5 +1,6 @@
 import os
 
+# pyrefly: ignore [missing-import]
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -60,42 +61,42 @@ class FutureProofRequest(BaseModel):
     tech_stack: str
     business_challenge: str
 
-# ── Fallback MCQ bank ─────────────────────────────────────────
+# ── Fallback MCQ bank (Aptitude & Blood Relations) ────────────────
 FALLBACK_QUESTIONS = {
     "web_dev": [
-        {"id": 1, "question": "What is the time complexity of binary search?", "options": ["O(n)", "O(log n)", "O(n²)", "O(1)"], "correct": 1},
-        {"id": 2, "question": "Which CSS property creates a new stacking context?", "options": ["display", "position", "z-index", "transform"], "correct": 3},
-        {"id": 3, "question": "In React, what hook is used for side effects?", "options": ["useState", "useCallback", "useEffect", "useMemo"], "correct": 2},
-        {"id": 4, "question": "What does REST stand for?", "options": ["Remote Exec", "Representational State Transfer", "Resource Template", "Reactive Streaming"], "correct": 1},
-        {"id": 5, "question": "Which HTTP method is idempotent and safe?", "options": ["POST", "PUT", "DELETE", "GET"], "correct": 3},
+        {"id": 1, "question": "Pointing to a photograph, a man said, 'I have no brother, and that man's father is my father's son.' Whose photograph was it?", "options": ["His son", "His own", "His father", "His nephew"], "correct": 0},
+        {"id": 2, "question": "A is the mother of B and C. If D is the husband of C, what is A to D?", "options": ["Mother", "Sister", "Aunt", "Mother-in-law"], "correct": 3},
+        {"id": 3, "question": "If 'A + B' means A is the brother of B; 'A x B' means A is the father of B. Which of the following means C is the son of M?", "options": ["M x N + C", "F x C + N", "N + M x C", "M x C + N"], "correct": 3},
+        {"id": 4, "question": "Look at this series: 2, 1, (1/2), (1/4)... What number should come next?", "options": ["(1/3)", "(1/8)", "(2/8)", "(1/16)"], "correct": 1},
+        {"id": 5, "question": "SCD, TEF, UGH, ____, WKL", "options": ["CMN", "UJI", "VIJ", "IJT"], "correct": 2},
     ],
     "data_ai": [
-        {"id": 1, "question": "What is overfitting in ML?", "options": ["Good generalisation", "High train/low test performance", "Slow training", "Too much data"], "correct": 1},
-        {"id": 2, "question": "What does gradient descent minimize?", "options": ["Model size", "Training data", "Loss function", "Prediction time"], "correct": 2},
-        {"id": 3, "question": "What is a confusion matrix used for?", "options": ["Visualising neural nets", "Evaluating classification models", "Data preprocessing", "Feature selection"], "correct": 1},
-        {"id": 4, "question": "What does 'epochs' mean in training?", "options": ["Data batches", "Full passes through dataset", "Learning rate steps", "Activation cycles"], "correct": 1},
-        {"id": 5, "question": "Which algorithm is best for non-linear decision boundaries?", "options": ["Linear Regression", "Logistic Regression", "Decision Tree", "K-Means"], "correct": 2},
+        {"id": 1, "question": "Introducing a boy, a girl said, 'He is the son of the daughter of the father of my uncle.' How is the boy related to the girl?", "options": ["Brother", "Nephew", "Uncle", "Son-in-law"], "correct": 0},
+        {"id": 2, "question": "Look at this series: 7, 10, 8, 11, 9, 12, ... What number should come next?", "options": ["7", "10", "12", "13"], "correct": 1},
+        {"id": 3, "question": "If South-East becomes North, North-East becomes West and so on. What will West become?", "options": ["North-East", "North-West", "South-East", "South-West"], "correct": 2},
+        {"id": 4, "question": "A man walks 5 km toward south and then turns to the right. After walking 3 km he turns to the left and walks 5 km. Now in which direction is he from the starting place?", "options": ["West", "South", "North-East", "South-West"], "correct": 3},
+        {"id": 5, "question": "QAR, RAS, SAT, TAU, _____", "options": ["UAV", "UAT", "TAS", "TAT"], "correct": 0},
     ],
     "cloud_devops": [
-        {"id": 1, "question": "What is a Kubernetes Pod?", "options": ["Virtual machine", "Smallest deployable unit", "Container registry", "Network policy"], "correct": 1},
-        {"id": 2, "question": "IaC stands for?", "options": ["Integration as Code", "Infrastructure as Code", "Interface as Component", "Internal as Core"], "correct": 1},
-        {"id": 3, "question": "Docker layers are?", "options": ["Mutable", "Immutable", "Optional", "Encrypted"], "correct": 1},
-        {"id": 4, "question": "Which command builds a Docker image?", "options": ["docker run", "docker build", "docker create", "docker start"], "correct": 1},
-        {"id": 5, "question": "What is a Helm chart?", "options": ["K8s network plugin", "Package manager template for K8s", "Docker compose file", "CI/CD pipeline"], "correct": 1},
+        {"id": 1, "question": "Pointing to a photograph, a woman says, 'This man's son's sister is my mother-in-law.' How is the woman's husband related to the man in the photograph?", "options": ["Grandson", "Son", "Nephew", "Son-in-law"], "correct": 0},
+        {"id": 2, "question": "FAG, GAF, HAI, IAH, _____", "options": ["JAK", "HAL", "HAK", "JAI"], "correct": 0},
+        {"id": 3, "question": "Which word does not belong with the others?", "options": ["Tulip", "Rose", "Bud", "Daisy"], "correct": 2},
+        {"id": 4, "question": "Odometer is to mileage as compass is to:", "options": ["Speed", "Hiking", "Needle", "Direction"], "correct": 3},
+        {"id": 5, "question": "If A is the brother of B; B is the sister of C; and C is the father of D, how D is related to A?", "options": ["Brother", "Sister", "Nephew", "Cannot be determined"], "correct": 3},
     ],
     "cybersecurity": [
-        {"id": 1, "question": "SQL injection exploits?", "options": ["Network vulnerabilities", "Improper input validation", "Weak passwords", "Outdated software"], "correct": 1},
-        {"id": 2, "question": "XSS stands for?", "options": ["Cross-Site Scripting", "Cross-Service Sync", "Cross-System Security", "Cross-Site Storage"], "correct": 0},
-        {"id": 3, "question": "Which header prevents clickjacking?", "options": ["Content-Security-Policy", "X-Frame-Options", "Strict-Transport-Security", "X-XSS-Protection"], "correct": 1},
-        {"id": 4, "question": "OWASP stands for?", "options": ["Open Web Application Security Project", "Online Web Auth Standard Protocol", "Open Wireless App Security Platform", "None"], "correct": 0},
-        {"id": 5, "question": "A man-in-the-middle attack intercepts?", "options": ["Server logs", "Database queries", "Communications between parties", "File system"], "correct": 2},
+        {"id": 1, "question": "A is B's sister. C is B's mother. D is C's father. E is D's mother. Then, how is A related to D?", "options": ["Grandfather", "Grandmother", "Daughter", "Granddaughter"], "correct": 3},
+        {"id": 2, "question": "Look at this series: 36, 34, 30, 28, 24, ... What number should come next?", "options": ["20", "22", "23", "26"], "correct": 1},
+        {"id": 3, "question": "Which word does not belong with the others?", "options": ["Index", "Glossary", "Chapter", "Book"], "correct": 3},
+        {"id": 4, "question": "Marathon is to race as hibernation is to:", "options": ["Winter", "Bear", "Dream", "Sleep"], "correct": 3},
+        {"id": 5, "question": "A man said to a lady, 'Your mother's husband's sister is my aunt.' How is the lady related to the man?", "options": ["Daughter", "Granddaughter", "Mother", "Sister"], "correct": 3},
     ],
     "mobile_dev": [
-        {"id": 1, "question": "Flutter is built with which language?", "options": ["Kotlin", "Dart", "Swift", "JavaScript"], "correct": 1},
-        {"id": 2, "question": "React Native renders using?", "options": ["WebView", "Native components", "HTML/CSS", "Canvas"], "correct": 1},
-        {"id": 3, "question": "What is a StatefulWidget in Flutter?", "options": ["Immutable widget", "Widget with mutable state", "Network widget", "Animated widget"], "correct": 1},
-        {"id": 4, "question": "APK files are for?", "options": ["iOS", "Android", "Web", "Desktop"], "correct": 1},
-        {"id": 5, "question": "Xcode is used for?", "options": ["Android apps", "iOS/macOS apps", "Cross-platform apps", "Backend services"], "correct": 1},
+        {"id": 1, "question": "A girl introduced a boy as the son of the daughter of the father of her uncle. The boy is girl's:", "options": ["Brother", "Son", "Uncle", "Son-in-law"], "correct": 0},
+        {"id": 2, "question": "CMM, EOO, GQQ, _____, KUU", "options": ["GRR", "GSS", "ISS", "ITT"], "correct": 2},
+        {"id": 3, "question": "Look at this series: 22, 21, 23, 22, 24, 23, ... What number should come next?", "options": ["22", "24", "25", "26"], "correct": 2},
+        {"id": 4, "question": "Yard is to inch as quart is to:", "options": ["Gallon", "Ounce", "Milk", "Liquid"], "correct": 1},
+        {"id": 5, "question": "Pointing to a man in a photograph, a woman said, 'His brother's father is the only son of my grandfather.' How is the woman related to the man?", "options": ["Mother", "Aunt", "Sister", "Daughter"], "correct": 2},
     ],
 }
 
@@ -109,33 +110,45 @@ def root():
 
 @app.post("/api/generate-test")
 async def generate_test(req: GenerateTestRequest):
-    """Generate a challenge using Gemini 2.5 Flash or fallback to hardcoded."""
-    if GEMINI_KEY:
+    """Generate a challenge using Groq API (serving as Grok)."""
+    if GROQ_API_KEY:
         try:
-            model = genai.GenerativeModel("gemini-2.5-flash")
             prompt = f"""
 You are creating a skills assessment for a {req.sector} role at difficulty: {req.difficulty}.
 Problem context: {req.problem_description}
 
 Generate a JSON response with:
 1. "title": A short challenge title (max 10 words)
-2. "round1_questions": Array of {req.num_questions} MCQ objects with keys: id, question, options (4 choices), correct (0-indexed)
+2. "round1_questions": Array of {req.num_questions} MCQ objects focused on aptitude, logical reasoning, and blood relations (NOT coding questions). Keys: id, question, options (4 choices), correct (0-indexed integer)
 3. "round2_problem": A LeetCode-style coding problem description (2-3 sentences)
 4. "round3_scenario": A real-world industry scenario (3-4 sentences)
 
-Return ONLY valid JSON, no markdown.
+Return ONLY valid JSON, no markdown formatting or backticks.
 """
-            response = model.generate_content(prompt)
-            import json
-            text = response.text.strip()
-            if text.startswith("```"):
-                text = text.split("```")[1]
-                if text.startswith("json"):
-                    text = text[4:]
-            data = json.loads(text.strip())
-            return data
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                resp = await client.post(
+                    "https://api.groq.com/openai/v1/chat/completions",
+                    headers={
+                        "Authorization": f"Bearer {GROQ_API_KEY}",
+                        "Content-Type": "application/json"
+                    },
+                    json={
+                        "model": "llama3-8b-8192",
+                        "messages": [{"role": "user", "content": prompt}],
+                        "temperature": 0.7
+                    }
+                )
+                resp.raise_for_status()
+                data = resp.json()
+                text = data["choices"][0]["message"]["content"].strip()
+                import json
+                if text.startswith("```"):
+                    text = text.split("```")[1]
+                    if text.startswith("json"):
+                        text = text[4:]
+                return json.loads(text.strip())
         except Exception as e:
-            print(f"Gemini error: {e}")
+            print(f"Groq error: {e}")
 
     # Fallback
     sector_key = req.sector if req.sector in FALLBACK_QUESTIONS else "web_dev"

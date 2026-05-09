@@ -18,6 +18,7 @@ import InterviewRoomsPage from './pages/company/InterviewRooms'
 import InternalMatchPage from './pages/company/InternalMatch'
 import CompanyFutureProof from './pages/company/CompanyFutureProof'
 import ProfilePage from './pages/ProfilePage'
+import ConnectPage from './pages/ConnectPage'
 import NotFound from './pages/NotFound'
 
 // Layout
@@ -90,6 +91,7 @@ export default function App() {
         <Route path="dashboard" element={<ApplicantDashboard />} />
         <Route path="challenges" element={<ChallengesPage />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="connect" element={<ConnectPage />} />
         <Route index element={<Navigate to="dashboard" />} />
       </Route>
 
@@ -113,6 +115,7 @@ export default function App() {
         <Route path="matches" element={<InternalMatchPage />} />
         <Route path="future-proof" element={<CompanyFutureProof />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="connect" element={<ConnectPage />} />
         <Route index element={<Navigate to="dashboard" />} />
       </Route>
 
@@ -124,6 +127,7 @@ export default function App() {
       }>
         <Route path="dashboard" element={<EmployeeDashboard />} />
         <Route path="profile" element={<ProfilePage />} />
+        <Route path="connect" element={<ConnectPage />} />
         <Route index element={<Navigate to="dashboard" />} />
       </Route>
 

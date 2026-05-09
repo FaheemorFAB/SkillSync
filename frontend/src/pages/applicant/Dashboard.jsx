@@ -256,17 +256,7 @@ export default function ApplicantDashboard() {
           </div>
         </section>
 
-        {/* Skills summary */}
-        {profile?.skills?.length > 0 && (
-          <section>
-            <h2 className="text-lg font-bold text-slate-900 mb-4">Your Skills</h2>
-            <div className="flex flex-wrap gap-2">
-              {profile.skills.map(skill => (
-                <span key={skill} className="skill-tag">{skill}</span>
-              ))}
-            </div>
-          </section>
-        )}
+
       </div>
     </div>
   )

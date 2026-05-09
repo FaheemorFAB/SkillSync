@@ -79,7 +79,6 @@ export default function LandingPage() {
               </Link>
             ) : (
               <>
-                <Link to="/login" className="btn btn-secondary btn-sm">Sign In</Link>
                 <Link to="/signup" className="btn btn-primary btn-sm shadow-md">
                   Get Started <ArrowRight size={14} />
                 </Link>

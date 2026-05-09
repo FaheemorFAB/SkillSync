@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Rocket, Trophy, Shield, Zap, Users, Code2, Database, Cloud,
-  Brain, ChevronRight, Star, CheckCircle, TrendingUp, ArrowRight, Lock
+  Brain, ChevronRight, Star, CheckCircle, TrendingUp, ArrowRight, Lock, Video
 } from 'lucide-react'
 
 const SECTORS = [

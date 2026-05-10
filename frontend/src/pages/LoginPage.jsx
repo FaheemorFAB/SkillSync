@@ -80,15 +80,7 @@ export default function LoginPage() {
             )}
           </div>
 
-          {/* Demo accounts */}
-          <div className="mt-6 p-4 rounded-lg bg-slate-50 border border-slate-200">
-            <p className="text-xs text-blue-600 font-semibold mb-3">🚀 Demo Accounts (no setup needed)</p>
-            <div className="space-y-1.5 text-xs text-slate-600">
-              <div>Applicant: <span className="text-slate-900 font-mono font-medium">demo@applicant.com</span> / <span className="font-mono text-slate-900 font-medium">Demo123!</span></div>
-              <div>Company: <span className="text-slate-900 font-mono font-medium">demo@company.com</span> / <span className="font-mono text-slate-900 font-medium">Demo123!</span></div>
-              <div>Employee: <span className="text-slate-900 font-mono font-medium">demo@employee.com</span> / <span className="font-mono text-slate-900 font-medium">Demo123!</span></div>
-            </div>
-          </div>
+
         </div>
 
         <p className="text-center text-sm text-slate-500 mt-6">

@@ -90,29 +90,29 @@ export default function ConnectPage() {
               </div>
 
               <div className="flex flex-col gap-2 mt-auto">
-                {p.social_links?.github && (
-                  <a href={p.social_links.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 transition-colors p-2 rounded-lg hover:bg-slate-50 border border-transparent hover:border-slate-200">
+                {p.github_url && (
+                  <a href={p.github_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900 transition-colors p-2 rounded-lg hover:bg-slate-50 border border-transparent hover:border-slate-200">
                     <Github size={16} />
                     <span className="flex-1 truncate">GitHub</span>
                     <ExternalLink size={14} className="text-slate-400" />
                   </a>
                 )}
-                {p.social_links?.linkedin && (
-                  <a href={p.social_links.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-600 hover:text-blue-700 transition-colors p-2 rounded-lg hover:bg-slate-50 border border-transparent hover:border-slate-200">
+                {p.linkedin_url && (
+                  <a href={p.linkedin_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-600 hover:text-blue-700 transition-colors p-2 rounded-lg hover:bg-slate-50 border border-transparent hover:border-slate-200">
                     <Linkedin size={16} />
                     <span className="flex-1 truncate">LinkedIn</span>
                     <ExternalLink size={14} className="text-slate-400" />
                   </a>
                 )}
-                {p.social_links?.website && (
-                  <a href={p.social_links.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-600 hover:text-emerald-600 transition-colors p-2 rounded-lg hover:bg-slate-50 border border-transparent hover:border-slate-200">
+                {p.website_url && (
+                  <a href={p.website_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-600 hover:text-emerald-600 transition-colors p-2 rounded-lg hover:bg-slate-50 border border-transparent hover:border-slate-200">
                     <Globe size={16} />
                     <span className="flex-1 truncate">Website</span>
                     <ExternalLink size={14} className="text-slate-400" />
                   </a>
                 )}
                 
-                {(!p.social_links || (!p.social_links.github && !p.social_links.linkedin && !p.social_links.website)) && (
+                {(!p.github_url && !p.linkedin_url && !p.website_url) && (
                   <div className="text-center p-3 bg-slate-50 rounded-lg border border-slate-100">
                     <p className="text-xs text-slate-400 font-medium">No social links provided</p>
                   </div>
